@@ -1,0 +1,47 @@
+﻿<!--
+File: index.html
+Author: Gabriel Hounsome
+Website: Crazy Comets
+Description: This is a side-scroller shooter game
+where the player must shoot oncoming asteroids and
+pickup powerups
+
+Revision: 1.0
+Last Modified By: Gabriel Hounsome
+Date Last Modified: November 07, 2014
+
+Citations: Used JQuery, collsion detection module from indiegamer and royalty free art from: wrathgames.com
+Royalty Free Music: royalty free music from: http://www.looperman.com/media/loops/630386/looperman-l-0630386-0077610-mrfunktastic-trap-gods-bells-140f.mp3
+-->
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Crazy Comets</title>
+    <link href="app.css" rel="stylesheet" />
+    <!-- CreateJS and jQuery libs -->
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="js/preloadjs-0.4.1.min.js"></script>
+    <script src="js/easeljs-0.7.1.min.js"></script>        
+    <script src="js/tweenjs-0.5.1.min.js"></script> 
+    <script src="js/soundjs-0.5.2.min.js"></script>
+    <!-- indiegmr collision detection lib -->
+    <script src="js/ndgmr.Collision.js"></script>
+    <!-- TypeScript compiler generated scripts --> 
+    <script src="ts/managers/assets.js"></script>
+    <script src="ts/managers/score.js"></script>
+    <script src="ts/objects/Object.js"></script>
+    <script src="ts/objects/Powerup.js"></script>
+    <script src="ts/objects/Enemy.js"></script>
+    <script src="ts/objects/Button.js"></script>
+    <script src="ts/objects/Background.js"></script> 
+    <script src="ts/objects/Bullet.js"></script>
+    <script src="ts/objects/Ship.js"></script>
+    <script src="ts/Main.js"></script>
+</head>
+<body>
+    <canvas id="gameCanvas" width="800" height="475"></canvas>
+</body>
+</html>
