@@ -79,8 +79,6 @@ class Main {
         // enable mouse and dom events
         this.stage.enableMouseOver();
         this.stage.enableDOMEvents(true);
-        //enable touch
-        createjs.Touch.enable(this.stage);
 
         // load the assets
         managers.Assets.init();
@@ -295,7 +293,7 @@ class Main {
         scoreBoard = new managers.scoreboard(this.game);        
         // create the ship object and setup the collision manager.
         this.ship = new objects.Ship(this.stage, this.game);
-        this.stage.addChild(this.ship);
+        this.game.addChild(this.ship);
         // set up the initial enemy spawner and powerup interval
         this.enemies = setInterval(() => { this.createEnemy() }, 150); 
         this.powerupInterval = setInterval(() => { this.createPowerup() }, 10000);       
@@ -332,6 +330,9 @@ class Main {
                     asteroidObj.destroy();
                     // if the player is out of lives...
                     if (scoreBoard.loseLife()) {
+
+                        // destroy ship.
+                        this.game.removeChild(this.ship);
                         // start ship explosion
                         shipExplode = new createjs.Sprite(managers.Assets.atlas, "ship_explosion");
                         shipExplode.x = this.ship.x - (this.ship.getBounds().width * 1.5);
@@ -339,8 +340,6 @@ class Main {
                         shipExplode.play();
                         // play explosion sound
                         createjs.Sound.play("asteroidExplosion");
-                        // destroy ship.
-                        this.ship.destroy();
                         // add explosion to the game container
                         this.game.addChild(shipExplode);
                         // set the game to false
@@ -450,6 +449,12 @@ class Main {
     // game over :(
     private gameOver(e: createjs.Event) {
         // remove all children from the game container and all event listeners from the stage.
+
+        asteroidExplosions = [];
+        this.bullets = [];
+        this.asteroidArray = [];
+        this.asteroidContainer.removeAllChildren();
+        this.bulletContainer.removeAllChildren();
         this.game.removeAllChildren();
         this.stage.removeAllEventListeners();
         // set the cursor back to normal
