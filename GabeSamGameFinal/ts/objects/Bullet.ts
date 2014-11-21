@@ -24,7 +24,7 @@ class Bullet extends createjs.Text {
         "many premium", "such doge"];
     constructor(shipRotation: number, stage: createjs.Stage, shooter: string) {
         super("", "Bold 15px Comic Sans MS", "#d3d3d3")
-        var randomNum = rand(0, this.dogeMemes.length);
+        var randomNum = rand(0, this.dogeMemes.length-1);
         if (shooter == "doge") {
             this.text = this.dogeMemes[randomNum];
         }
