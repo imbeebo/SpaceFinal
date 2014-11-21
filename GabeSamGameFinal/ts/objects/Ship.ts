@@ -36,6 +36,10 @@ module objects {
             this.shipAngle = new createjs.Text('', 'bold 15px Segoe UI', '#FFFFFF');
             this.shipAngle.y = 10;
             this.shipAngle.x = 200;
+            this.x = 100;
+            this.y = 200;
+            this.regX = this.getBounds().width * .5;
+            this.regY = this.getBounds().height * .5;
             this.game.addChild(this.shipAngle);
             this.oldX = 10;
             this.oldY = 10;
@@ -45,7 +49,7 @@ module objects {
             var angle = Math.atan2(this.stage.mouseY - this.y, this.stage.mouseX - this.x);
             angle = angle * (180 / Math.PI);    
 
-            createjs.Tween.get(this).to({ x: this.stage.mouseX - 30, y: this.stage.mouseY }, 100, createjs.Ease.sineIn);
+            createjs.Tween.get(this).to({ x: this.stage.mouseX, y: this.stage.mouseY }, 100, createjs.Ease.sineIn);
 
 
 

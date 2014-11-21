@@ -19,6 +19,7 @@
   <ItemGroup>
     <Content Include="app.css" />
     <Content Include="assets\images\Background.png" />
+    <Content Include="assets\images\BackgroundB1.jpg" />
     <Content Include="assets\images\bgTile.jpg" />
     <Content Include="assets\images\spriteSheet.png" />
     <Content Include="assets\images\star001.png" />
@@ -57,6 +58,7 @@
     <Content Include="ts\Scripts\typings\tweenjs\tweenjs.d.ts" />
     <Content Include="web.config" />
     <TypeScriptCompile Include="ts\objects\Button.ts" />
+    <TypeScriptCompile Include="ts\objects\dogeSays.ts" />
     <TypeScriptCompile Include="ts\objects\Enemy.ts" />
     <TypeScriptCompile Include="ts\objects\Object.ts" />
     <TypeScriptCompile Include="ts\objects\Powerup.ts" />

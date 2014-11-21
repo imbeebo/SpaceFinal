@@ -15,23 +15,35 @@ Royalty Free Music: royalty free music from: http://www.looperman.com/media/loop
 */
 
 // bullet class
-class Bullet extends createjs.Bitmap {
+class Bullet extends createjs.Text {
     // constructor for the bullet
-    public oldX: number;
     shipRotation: number;
-    constructor(img: HTMLImageElement, rect: createjs.Rectangle, x: number, y: number, shipRotation: number) {
-        super(img);
-        this.sourceRect = rect;
+    private dogeMemes = ["So Destroy", "Very Violence", "Much Fight", "Very Wow",
+        "very mlg", "wow", "many cat", "much coin", "WOW", "very doge",
+        "many side scroller", "much wow", "so advanced web", "much cool",
+        "many premium", "such doge"];
+    constructor(shipRotation: number, stage: createjs.Stage, shooter: string) {
+        super("", "Bold 15px Comic Sans MS", "#d3d3d3")
+        var randomNum = rand(0, this.dogeMemes.length);
+        if (shooter == "doge") {
+            this.text = this.dogeMemes[randomNum];
+        }
+
+        
+        
         // set where the bullet is.
         this.shipRotation = shipRotation;
-        this.x = x;
-        this.rotation = shipRotation;
-        this.y = y;
+        this.regX = (this.dogeMemes[randomNum].length*7)*.5;
+        this.regY = 10*1.5;
+        this.x = stage.mouseX;
+        this.rotation = shipRotation+90;
+        this.y = stage.mouseY;
         this.name = 'bullet';
+        
     }   
     // move the bullet
     public tick(ds: number) {   
-        this.x += 10 * Math.cos(-this.shipRotation / 180 * Math.PI);
-        this.y -= 10 * Math.sin(-this.shipRotation / 180 * Math.PI);
+        this.x += 4 * Math.cos(-this.shipRotation / 180 * Math.PI);
+        this.y -= 4 * Math.sin(-this.shipRotation / 180 * Math.PI);
     }
 } 

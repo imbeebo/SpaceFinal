@@ -65,10 +65,12 @@ class Main {
         this.canvas = canvas;
         this.game = new createjs.Container();
         this.bulletContainer = new createjs.Container();
+        this.bulletContainer.cache(0, 0, this.canvas.width, this.canvas.height);
         this.asteroidContainer = new createjs.Container();
+        this.asteroidContainer.cache(0, 0, this.canvas.width, this.canvas.height);
         this.bgContainer = new createjs.Container();
         this.stage = new createjs.Stage(canvas);
-        this.message = new createjs.Text('', 'bold 30px Segoe UI', '#ffffff');
+        this.message = new createjs.Text('', 'bold 30px Comic Sans MS', '#ffffff');
         this.message.textAlign = 'center';
         this.message.x = canvas.width * .5;
         this.message.y = canvas.height * .5;
@@ -346,17 +348,36 @@ class Main {
                     }
                 }
             }
+        }        
+        // do the asteroid explosions, loop through the array for each explosion and check if it still has frames to display
+        for (var i in asteroidExplosions) {
+            var aExplosion = asteroidExplosions[i];
+            if (aExplosion.currentFrame == 113) {
+                // stop the animation and remove it from the game container and array
+                aExplosion.stop();
+                this.removeElement(aExplosion, asteroidExplosions, this.asteroidContainer);
+
+            }
         }
+        this.asteroidContainer.updateCache();
     }
+    
     // move the bullets! PEW-PEW!
     private moveBullets(ds: number) {
         // loop through the bullets array and move them closer to the edge of the screen.
         for (var i in this.bullets) {
             var bullet = this.bullets[i];
             bullet.tick(ds);
+            var newBullet = managers.Assets.atlas.getFrame(6).image;
+            var bulletBox = new createjs.Bitmap(newBullet);
+            
+            
+            bulletBox.x = bullet.x;
+            bulletBox.sourceRect = new createjs.Rectangle(bullet.x, bullet.y, bullet.regX * 1.5, 10);
+            bulletBox.y = bullet.y;
             // loop through the asteroid array and check for a collision between the current bullet in the above loop and the enemy in this new loop
             for (var count = 0; count < this.asteroidArray.length; count++) {
-                var collision = ndgmr.checkPixelCollision(this.asteroidArray[count], bullet, 0);
+                var collision = ndgmr.checkRectCollision(this.asteroidArray[count], bulletBox);
                 // if a collision happens...
                 if (collision) {
                     // damage the asteroid then remove the bullet from the game and from the array.
@@ -372,7 +393,7 @@ class Main {
                     // create an explosion sound for the bullet
                     createjs.Sound.play("explosion");
                     // add the explosion to the game container and update the stage.
-                    this.game.addChild(explosionSprite);
+                    this.bulletContainer.addChild(explosionSprite);
                 }
             }
             // if the game is past the edge of the screen, delete it.
@@ -380,6 +401,16 @@ class Main {
                 this.removeElement(bullet, this.bullets, this.bulletContainer);
             }
         }
+        // do the bullet explosions, loop through the array for each explosion and check if it still has frames to display
+        for (var i in explosions) {
+            var explosion = explosions[i];
+            if (explosion.currentFrame == 23) {
+                // stop the animation and remove it from the game container and array
+                explosion.stop();
+                this.removeElement(explosion, explosions, this.bulletContainer);
+            }
+        }
+        this.bulletContainer.updateCache();
     }
     // this is the ticker class
     private tick(e: createjs.TickerEvent, e2:createjs.Event) {
@@ -387,7 +418,7 @@ class Main {
         // move the background image
         this.background.tick(ds);
         // if the game state is true...
-
+                                     
 
 
         if (gameOn) {
@@ -395,87 +426,12 @@ class Main {
             if (this.multiTimer <= createjs.Ticker.getTime()&&scoreBoard.getMulti()==2) {
                 scoreBoard.resetMulti();
             }
-            
-            // this loop checks for any random bullets that should be removed
-            // first loop through the game children array
-            for (var a in this.game.children) {
-                // get an instance of the current child
-                var chck = this.game.children[a];
-                // check if the name = bullet
-                if (chck.name == 'bullet') {
-                    // set the bullet to alive
-                    var bulletAlive = true;
-                    // loop through the bullet array
-                    for (var b in this.bullets) {
-                        // get an instance of the current bullet.
-                        var cBullet = this.bullets[b];
-                        // check if the id of each object matches.
-                        if (chck.id == cBullet.id) {
-                            // if the id matches, set the bullet to alive and break out of the loop
-                            bulletAlive = true;
-                            break;
-                        }
-                        // otherwise set the bullet to false
-                        else {
-                            bulletAlive = false;
-                        }
-                    }
-                    // once both loops are running, if the bullet is still false then it is no
-                    // longer in the array and must be removed from the game container
-                    if (!bulletAlive) {
-                        this.bulletContainer.removeChild(chck);
-                    }
-                }
-                if (chck.name == 'gold' || chck.name == 'multiply' || chck.name == 'nuke' || chck.name == 'plus') {
-                    // set the bullet to alive
-                    var powerAlive = true;
-                    // loop through the bullet array
-                    for (var b in this.powersArray) {
-                        // get an instance of the current bullet.
-                        var cPower = this.powersArray[b];
-                        // check if the id of each object matches.
-                        if (chck.id == cPower.id) {
-                            // if the id matches, set the bullet to alive and break out of the loop
-                            powerAlive = true;
-                            break;
-                        }
-                        // otherwise set the bullet to false
-                        else {
-                            powerAlive = false;
-                        }
-                    }
-                    // once both loops are running, if the bullet is still false then it is no
-                    // longer in the array and must be removed from the game container
-                    if (!powerAlive) {
-                        this.game.removeChild(chck);
-                    }
-                }
-            }
             // move the asteroids!
             this.moveAsteroids(ds);
             this.movePowerUps(ds);
             
             // move the bullets!
             this.moveBullets(ds);
-        }
-        // do the bullet explosions, loop through the array for each explosion and check if it still has frames to display
-        for (var i in explosions) {
-            var explosion = explosions[i];
-            if (explosion.currentFrame == 23) {
-                // stop the animation and remove it from the game container and array
-                explosion.stop();
-                this.removeElement(explosion, explosions, this.game);
-            }
-        }
-        // do the asteroid explosions, loop through the array for each explosion and check if it still has frames to display
-        for (var i in asteroidExplosions) {
-            var aExplosion = asteroidExplosions[i];
-            if (aExplosion.currentFrame == 113) {
-                // stop the animation and remove it from the game container and array
-                aExplosion.stop();
-                this.removeElement(aExplosion, asteroidExplosions, this.asteroidContainer);
-                
-            }
         }
         // do the ship explosion, loop through the array for each explosion and check if it still has frames to display
         if (shipExplode != null) {
@@ -538,14 +494,15 @@ class Main {
             if (this.debounce + 250 < newTime && gameOn) {
                 // create two bullets for the ship and put them into an array
                 var newBullet = managers.Assets.atlas.getFrame(6).image;
-                var bulletL = new Bullet(newBullet, managers.Assets.atlas.getFrame(6).rect, this.ship.x, this.ship.y, this.ship.getShipRotation());
-
+                var bulletL = new Bullet(this.ship.rotation, this.stage, "doge");
+                
                 this.bullets.push(bulletL);
                 //var bulletR = new Bullet(newBullet, managers.Assets.atlas.getFrame(6).rect, this.ship.imageShip.x, this.ship.imageShip.y, this.ship.getShipRotation());
                 //this.bullets.push(bulletR);
                 // create a sound for the bullets
                 createjs.Sound.play("laser");
                 // add the bullets to the game container
+                
                 this.bulletContainer.addChild(bulletL);
             }
         }
