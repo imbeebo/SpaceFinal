@@ -32,6 +32,7 @@ var gameOn = false;
 var gameScore: number = 0;
 var playerName = '';
 var nameInputForm: createjs.DOMElement;
+var bullets: Bullet[] = [];
 // main class 
 class Main {
     // private variables for the class
@@ -46,7 +47,6 @@ class Main {
     private background: Background;
     private bulletImg: HTMLImageElement;
     private music: createjs.SoundInstance;
-    private bullets: Bullet[] = [];
     private asteroidArray: objects.Enemy[] = [];
     private powersArray: objects.Powerup[] = [];
     private gameOverScreen: boolean = false;    
@@ -457,6 +457,7 @@ class Main {
         this.bulletContainer.removeAllChildren();
         this.game.removeAllChildren();
         this.stage.removeAllEventListeners();
+        this.stage.update();
         // set the cursor back to normal
         this.stage.cursor = "default";
         // create the back button and text with the mouse over and click events
