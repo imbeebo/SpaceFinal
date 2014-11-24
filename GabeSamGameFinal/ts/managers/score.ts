@@ -18,7 +18,7 @@ module managers {
     // Score Class
     export class scoreboard {
         // private variables
-        private lives: number = 3;
+        private lives: number = 100;
         private scoreText: createjs.Text;
         private livesText: createjs.Text;
         private game: createjs.Container;
@@ -61,12 +61,17 @@ module managers {
             this.scoreText.text = "Score: " + gameScore+' x'+this.scoreMultiplier;
         }
         // lose a life :(
-        loseLife(): boolean {
-            this.lives -= 1;
+        loseLife(crash: boolean): boolean {
+            if (crash) {
+                this.lives -= 25;
+            }
+            else {
+                this.lives -= 5;
+            }
             // update the lives text
             this.livesText.text = "Lives: " + this.lives;
             // if dead, return true
-            if (this.lives == 0) {
+            if (this.lives <= 0) {
                 return true;
             }
             // else, keep playing!

@@ -20,22 +20,28 @@ class Bullet extends createjs.Text {
     shipRotation: number;          
     character: string;
     playerShot: boolean;
-    private dogeMemes = ["So Destroy", "Very Violence", "Much Fight", "Very Wow",
-        "very mlg", "wow", "many cat", "much coin", "WOW", "very doge",
+    private dogeMemes = ["so destroy", "very violence", "much fight", "very wow",
+        "very mlg", "wow", "many cat", "much coin", "very doge",
         "many side scroller", "much wow", "so advanced web", "much cool",
         "many premium", "such doge"];
     private ermahgerdMemes = ["ERMAHGERD!", "GERSBERMPS!", "ERMAHGERDON!", "ERTS DURGE!",
-        "MER BERLERTS!", "BURNG BURNG!", "many cat", "much coin", "WOW", "very doge",
-        "many side scroller", "much wow", "so advanced web", "much cool",
-        "many premium", "such doge"];
+        "MER BERLERTS!", "BURNG BURNG!", "GERT DURGE!"];
     constructor(stage: createjs.Stage, character: string, playerShot: boolean, shipRotation?: number, shooter?: createjs.Sprite) {
-        super("", "Bold 15px Comic Sans MS", "#d3d3d3")
+        super("", "", "#d3d3d3")
         this.playerShot = playerShot;
         this.character = character;
         if (this.character == "doge") {
+            this.font = "Bold 15px Comic Sans MS";
             var randomNum = rand(0, this.dogeMemes.length - 1);
             this.text = this.dogeMemes[randomNum];
             this.regX = (this.dogeMemes[randomNum].length * 7) * .5;
+            this.regY = 10 * 1.5;
+        }
+        else {
+            this.font = "Bold 15px Arial";
+            var randomNum = rand(0, this.ermahgerdMemes.length - 1);
+            this.text = this.ermahgerdMemes[randomNum];
+            this.regX = (this.ermahgerdMemes[randomNum].length * 7) * .5;
             this.regY = 10 * 1.5;
         }
 
@@ -51,7 +57,9 @@ class Bullet extends createjs.Text {
         }
         else {
             this.x = shooter.x;
-            this.y = shooter.y;
+            var shootLoc= rand(shooter.y - shooter.regY, shooter.y + shooter.regY);
+            this.y = shootLoc;
+            //this.rotation = 90;
         }
         this.name = 'bullet';
 
@@ -66,5 +74,8 @@ class Bullet extends createjs.Text {
         else {
             this.x -= ds * 350;
         }
+    }
+    public playerBullet() {
+        return this.playerShot;
     }
 } 

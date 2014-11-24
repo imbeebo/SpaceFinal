@@ -30,10 +30,10 @@ module objects {
             this.name = character;
             // create a new sprite with the image; set up the height and width, registration points and the coordinates 
             if (this.name == "doge") {
-                //this.gotoAndStop(newEnemy);
+                this.gotoAndStop("aestroid_gray");
             }
             else {
-                //this.gotoAndStop(newEnemy);
+                this.gotoAndStop("aestroid_brown");
             }
             
             this.regX = this.getBounds().width *.5;
@@ -45,9 +45,9 @@ module objects {
         }
 
         private enemyShoot() {
-            var newBullet = managers.Assets.atlas.getFrame(6).image;
             var bulletL = new Bullet(this.stage, this.name, false, null, this);
             bullets.push(bulletL);
+            bulletContainer.addChild(bulletL);
         }
         // set the forward velocity, angle velocity and rotation amount to a random value
         private forwardVelocity = rand(150, 250);
@@ -64,6 +64,7 @@ module objects {
         }  
         // Destroy the enemy
         destroy() {
+            window.clearInterval(this.shootInterval);
             // set up an explosion animation for the enemy
             var enemyExplode = new createjs.Sprite(managers.Assets.atlas, "asteroid_explosion");
             enemyExplode.x = this.x - (this.getBounds().width * .5);
