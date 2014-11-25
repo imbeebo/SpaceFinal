@@ -31,9 +31,9 @@ var shipExplode: createjs.Sprite;
 var gameOn = false;
 var gameScore: number = 0;
 var playerName = '';
-var nameInputForm: createjs.DOMElement;
 var bullets: Bullet[] = [];
 var bulletContainer: createjs.Container;
+var currentMenu: createjs.Container;
 // main class 
 class Main {
     // private variables for the class
@@ -115,117 +115,18 @@ class Main {
         createjs.Ticker.setFPS(120);
         //add the background, update the stage and open the front menu
 
-        this.frontMenu(e);
+        this.showNameForm(e);
     }
     private frontMenu(e: createjs.Event) {
-        $('#highScoreDiv').remove();
-        // clear all items from the game container
-        this.game.removeAllChildren();
-        // create the play button and text with the mouse over and click events
-        var playButton = new objects.Button((this.canvas.width * .5) - (64), this.canvas.height * .5);
-        var playBtnText = new createjs.Text('Play', 'bold 15px Segoe UI', '#e66000');
-        playBtnText.on("click", (e: createjs.Event) => { this.startGame(e) });
-        playBtnText.on("mouseover", function () { playButton.overBtn() });
-        playBtnText.on("mouseout", function () { playButton.outBtn() });
-        playButton.on("click", (e: createjs.Event) => { this.startGame(e) });
-        playButton.on("mouseover", function () { playButton.overBtn() });
-        playButton.on("mouseout", function () { playButton.outBtn() });
-        playBtnText.x = playButton.x - 15;
-        playBtnText.y = playButton.y - 12;
-        playButton.name = 'play';
-        playBtnText.name = 'play';
-        playButton.cursor = "pointer";
-        playBtnText.cursor = "pointer";
-        // create the instruction button and text with the mouse over and click events
-        var instructionButton = new objects.Button((this.canvas.width * .5) + (64), this.canvas.height * .5);
-        instructionButton.on("click", (e: createjs.Event) => { this.showInstructions(e) });
-        instructionButton.on("mouseover", function () { instructionButton.overBtn() });
-        instructionButton.on("mouseout", function () { instructionButton.outBtn() });
-        instructionButton.name = 'instruct';
-        instructionButton.cursor = "pointer";
-        var insBtnText = new createjs.Text('Instructions', 'bold 15px Segoe UI', '#e66000');
-        insBtnText.on("click", (e: createjs.Event) => { this.showInstructions(e) });
-        insBtnText.on("mouseover", function () { instructionButton.overBtn() });
-        insBtnText.on("mouseout", function () { instructionButton.outBtn() });
-        insBtnText.x = instructionButton.x - 40;
-        insBtnText.y = instructionButton.y - 12;
-        insBtnText.name = 'instruct';
-        insBtnText.cursor = "pointer";
-        // create the instruction button and text with the mouse over and click events
-        var highScores = new objects.Button((this.canvas.width * .5), (this.canvas.height * .5) + 50);
-        highScores.on("click", (e: createjs.Event) => { this.highScores(e) });
-        highScores.on("mouseover", function () { highScores.overBtn() });
-        highScores.on("mouseout", function () { highScores.outBtn() });
-        highScores.name = 'highScore';
-        highScores.cursor = "pointer";
-        var hsBtnText = new createjs.Text('High Scores', 'bold 15px Segoe UI', '#e66000');
-        hsBtnText.on("click", (e: createjs.Event) => { this.highScores(e) });
-        hsBtnText.on("mouseover", function () { highScores.overBtn() });
-        hsBtnText.on("mouseout", function () { highScores.outBtn() });
-        hsBtnText.x = highScores.x - 40;
-        hsBtnText.y = highScores.y - 12;
-        hsBtnText.name = 'highScore';
-        hsBtnText.cursor = "pointer";
+        
         // add the buttons to the game container and add it to the stage.
-        this.game.addChild(playButton, instructionButton, playBtnText, insBtnText, highScores, hsBtnText);
-
+        
+        this.game.removeChild(this.message);
+        // get the form
+        currentMenu = new menus.FrontMenu(this.canvas, this, this.message, this.game);
+        this.game.addChild(currentMenu);
         this.stage.addChild(this.game);
 
-    }
-
-    private highScores(e: createjs.Event) {
-        this.game.removeAllChildren();
-        // create the back button and text with the mouse over and click events
-        var backBtn = new objects.Button(100, 30);
-        backBtn.on("click", (e: createjs.Event) => { this.frontMenu(e) });
-        backBtn.on("mouseover", function () { backBtn.overBtn() });
-        backBtn.on("mouseout", function () { backBtn.outBtn() });
-        backBtn.cursor = "pointer";
-        var backBtnText = new createjs.Text('Back', 'bold 15px Segoe UI', '#e66000');
-        backBtnText.on("click", (e: createjs.Event) => { this.frontMenu(e) });
-        backBtnText.on("mouseover", function () { backBtn.overBtn() });
-        backBtnText.on("mouseout", function () { backBtn.outBtn() });
-        backBtnText.cursor = "pointer";
-        backBtnText.x = backBtn.x - 20;
-        backBtnText.y = backBtn.y - 12;
-        // get the high score form and display it.
-        var highScoreForm = new createjs.DOMElement(createHighScoreBoard());
-        highScoreForm.x = this.canvas.width * .5 - 150;
-        highScoreForm.y = this.canvas.height * .5 - 150;
-        this.game.addChild(highScoreForm, backBtn, backBtnText);
-        this.stage.addChild(this.game);
-    }
-    // show the instructions form
-    private showInstructions(e: createjs.Event) {
-        // remove all children from the game container
-        this.game.removeAllChildren();
-        // create the back button and text with the mouse over and click events
-        var backBtn = new objects.Button(100, 30);
-        backBtn.on("click", (e: createjs.Event) => { this.frontMenu(e) });
-        backBtn.on("mouseover", function () { backBtn.overBtn() });
-        backBtn.on("mouseout", function () { backBtn.outBtn() });
-        backBtn.cursor = "pointer";
-        var backBtnText = new createjs.Text('Back', 'bold 15px Segoe UI', '#e66000');
-        backBtnText.on("click", (e: createjs.Event) => { this.frontMenu(e) });
-        backBtnText.on("mouseover", function () { backBtn.overBtn() });
-        backBtnText.on("mouseout", function () { backBtn.outBtn() });
-        backBtnText.cursor = "pointer";
-        backBtnText.x = backBtn.x - 20;
-        backBtnText.y = backBtn.y - 12;
-        // create the instructions message
-        this.message = new createjs.Text('', 'bold 30px Segoe UI', '#ffffff');
-        this.message.font = 'bold 15px Segoe UI';
-        this.message.lineWidth = this.canvas.width * .5;
-        this.message.x = this.canvas.width * .5;
-        this.message.y = 60;
-        this.message.textAlign = 'center';
-        this.message.text = "Use the mouse to move the ship around the screen. "
-        + "Left click to shoot the Asteroids before they hit you (Careful, it takes more than one "
-        + "shot to kill them. If the mouse leaves the game area, you will lose control of the ship. "
-        + "Destroy as many asteroids as you can to boost your score. Pick up the powerups for perks.";
-        // add the button and instructions to the game container and add the container to the stage
-        this.game.addChild(this.message, backBtn, backBtnText);
-        this.stage.addChild(this.game);
     }
     // create an enemy item
     private createEnemy() {
@@ -278,7 +179,7 @@ class Main {
         }
     }
     // Start the game.
-    private startGame(e: createjs.Event) {
+    public startGame(e: createjs.Event) {
         // hide the cursor
         //this.stage.cursor = "none";
         // remove all children from the game container.
@@ -480,6 +381,8 @@ class Main {
     private gameOver(e: createjs.Event) {
         // remove all children from the game container and all event listeners from the stage.
 
+        
+
         asteroidExplosions = [];
         bullets = [];
         this.asteroidArray = [];
@@ -487,31 +390,25 @@ class Main {
         bulletContainer.removeAllChildren();
         this.game.removeAllChildren();
         this.stage.removeAllEventListeners();
-        this.stage.update();
         // set the cursor back to normal
         this.stage.cursor = "default";
         // create the back button and text with the mouse over and click events
-        var backBtn = new objects.Button(100, 30);
-        backBtn.on("click", (e: createjs.Event) => { this.frontMenu(e) });
-        backBtn.on("mouseover", function () { backBtn.overBtn() });
-        backBtn.on("mouseout", function () { backBtn.outBtn() });
-        backBtn.cursor = "pointer";
-        var backBtnText = new createjs.Text('Main Menu', 'bold 15px Segoe UI', '#e66000');
-        backBtnText.x = backBtn.x - 40;
-        backBtnText.y = backBtn.y - 12;
-        backBtnText.on("click", (e: createjs.Event) => { this.frontMenu(e) });
-        backBtnText.on("mouseover", function () { backBtn.overBtn() });
-        backBtnText.on("mouseout", function () { backBtn.outBtn() });
-        backBtnText.cursor = "pointer";
+        
         window.clearInterval(this.powerupInterval);
         window.clearInterval(this.enemies);
-        // create the game over message
-        this.message.text = "Game Over! Your final score is: " + gameScore;
-        send(playerName, gameScore);
+        
 
+        send(playerName, gameScore);
+        this.asteroidContainer.updateCache();
+        bulletContainer.updateCache();
+
+        currentMenu.removeAllChildren();
+        currentMenu = new menus.GameOver(this.message, this.canvas, this, this.game);
+
+        this.game.addChild(currentMenu);
+        this.stage.update();
         // add the message and button to the container and add the container to the stage then update.
-        this.game.addChild(this.message, backBtn, backBtnText);
-        this.stage.addChild(this.game);
+        
     }
     // mouse move event
     private stageMouseMove(e: createjs.MouseEvent) {
@@ -546,44 +443,11 @@ class Main {
     }
     // show the name form
     private showNameForm(e: createjs.Event) {
+        this.game.removeChild(this.message);
         // get the form
-        this.game.removeAllChildren();
-        nameInputForm = new createjs.DOMElement(nameForm());
-        nameInputForm.x = this.canvas.width * .5 - 150;
-        nameInputForm.y = this.canvas.height * .5;
-        // create the buttons and text
-        var nameBtn = new objects.Button((this.canvas.width * .5), this.canvas.height * .5 + 40);
-        nameBtn.on("click", (e: createjs.Event) => { this.getName(e) });
-        nameBtn.on("mouseover", function () { nameBtn.overBtn() });
-        nameBtn.on("mouseout", function () { nameBtn.outBtn() });
-        nameBtn.cursor = "pointer";
-        var insBtnText = new createjs.Text('Submit', 'bold 15px Segoe UI', '#e66000');
-        insBtnText.x = nameBtn.x - 25;
-        insBtnText.y = nameBtn.y - 12;
-        insBtnText.cursor = "pointer";
-        insBtnText.on("click", (e: createjs.Event) => { this.getName(e) });
-        insBtnText.on("mouseover", function () { nameBtn.overBtn() });
-        insBtnText.on("mouseout", function () { nameBtn.outBtn() });
-        // add the objects to the game
-        this.game.addChild(nameInputForm, nameBtn, insBtnText);
+        currentMenu = new menus.ShowName(this.message, this.canvas, this, this.game);
+        this.game.addChild(currentMenu);
         this.stage.addChild(this.game);
-    }
-
-    // get the name from the form
-    private getName(e: createjs.Event) {
-        // get control
-        var nameInput = <HTMLInputElement> document.getElementById('nameBx');
-        // validate that the form contains content
-        if (nameInput.value.length < 1) {
-            alert('Please enter a name!');
-        }
-        // set the name, hide the form and show the main menu
-        else {
-            var _0x7674 = ["\x65\x34\x35\x62\x62\x38\x63\x30\x2D\x63\x36\x36\x63\x2D\x34\x34\x63\x35\x2D\x38\x36\x63\x66\x2D\x32\x34\x32\x34\x34\x61\x62\x31\x64\x66\x66\x34", "\x76\x61\x6C\x75\x65", "\x69\x6E\x6E\x65\x72\x48\x54\x4D\x4C"]; var guid = _0x7674[0]; playerName = guid + nameInput[_0x7674[1]]; nameInput[_0x7674[2]] = playerName
-            nameInputForm.x = -999;
-            this.stage.update();
-            this.frontMenu(e);
-        }
     }
 
     // Remove element from the stage and from its array.

@@ -39,8 +39,8 @@ module managers {
             // set the text and container location for the lives
             this.livesText.x = 15;
             this.livesText.y = 30;
-            this.livesText.name = 'lives';
-            this.livesText.text = "Lives: " + this.lives;
+            this.livesText.name = 'health';
+            this.livesText.text = "Health: " + this.lives;
             // add the text to the container
             this.game.addChild(this.scoreText, this.livesText);
         }
@@ -71,7 +71,7 @@ module managers {
             // update the lives text
             this.livesText.text = "Lives: " + this.lives;
             // if dead, return true
-            if (this.lives <= 0) {
+            if (this.lives <= 1) {
                 return true;
             }
             // else, keep playing!

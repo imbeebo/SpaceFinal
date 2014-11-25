@@ -40,6 +40,11 @@
     <Content Include="js\soundjs-0.5.2.min.js" />
     <TypeScriptCompile Include="ts\managers\assets.ts" />
     <TypeScriptCompile Include="ts\managers\score.ts" />
+    <TypeScriptCompile Include="ts\menus\FrontMenu.ts" />
+    <TypeScriptCompile Include="ts\menus\GameOver.ts" />
+    <TypeScriptCompile Include="ts\menus\HighScores.ts" />
+    <TypeScriptCompile Include="ts\menus\ShowInstructions.ts" />
+    <TypeScriptCompile Include="ts\menus\ShowNameForm.ts" />
     <TypeScriptCompile Include="ts\objects\Bullet.ts" />
     <TypeScriptCompile Include="ts\objects\Background.ts" />
     <Content Include="getScores.php">
