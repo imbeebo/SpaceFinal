@@ -70,7 +70,7 @@ module managers {
                 this.lives -= 5;
             }
             // update the lives text
-            this.livesText.text = "Health: " + this.lives;
+            this.livesText.text = "Lives: " + this.lives;
             // if dead, return true
             if (this.lives <= 1) {
                 return true;
@@ -100,16 +100,15 @@ module managers {
         }
         setLife(percentage: number) {
             this.lives = this.lives * percentage;
-            this.livesText.text = "Health: " + this.lives;
         }
         giveLife() {
-            this.lives += 10;
-            this.livesText.text = "Health: " + this.lives;
+            this.lives += 1;
+            this.livesText.text = "Lives: " + this.lives;
         }
         // reset the lives to 3
         reset() {
             this.lives = 3;
-            this.livesText.text = "Health: " + this.lives;
+            this.livesText.text = "Lives: " + this.lives;
         }
     }
 }   

@@ -64,7 +64,6 @@ class Main {
 
     private enemiesSpawn: number = 1;
     private enemyHealth: number = 100;
-    private levelIncrementChecker: number = 0;
 
 
     
@@ -105,23 +104,20 @@ class Main {
         managers.Assets.loader.addEventListener('progress', (e: createjs.Event) => { this.loading(e) });
     }
     private setLevelVariables() {
-        if (gameLevel == 1 ) {
+        if (gameLevel == 1) {
             this.background.setBackgroundSpeed(100);
             this.enemiesSpawn = 1;
             this.enemyHealth = 100;
-            this.levelIncrementChecker++;
         }
         else if (gameLevel == 2) {
             this.background.setBackgroundSpeed(150);
             scoreBoard.setLife(1.15);
             this.enemiesSpawn = 2;
-            this.levelIncrementChecker++;
         }
-        else if (gameLevel == 3) {
+        if (gameLevel == 3) {
             this.background.setBackgroundSpeed(250);
             scoreBoard.setLife(1.20);
             this.enemyHealth = 150;
-            this.levelIncrementChecker++;
         }
     }
     // Show loading progress to the user
@@ -383,13 +379,13 @@ class Main {
         var ds = e.delta / 1000;
 
         if (scoreBoard != null) {
-            if (scoreBoard.getEnemiesDestroyed() >= 5 && this.levelIncrementChecker == 2) {
-                gameLevel = 3;
+            if (scoreBoard.getEnemiesDestroyed() == 5) {
+                gameLevel = 2;
                 console.log(gameLevel);
                 this.setLevelVariables();
             }
-            else if (scoreBoard.getEnemiesDestroyed() >= 2 && this.levelIncrementChecker == 1) {
-                gameLevel = 2;
+            else if (scoreBoard.getEnemiesDestroyed() == 2) {
+                gameLevel = 5;
                 console.log(gameLevel);
                 this.setLevelVariables();
             }
