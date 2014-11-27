@@ -1,5 +1,5 @@
 {
-"images": ["spriteSheet.png"],
+"images": ["assets/images/spriteSheet.png"],
 "frames": [
 
     [1622, 822, 128, 40], 
