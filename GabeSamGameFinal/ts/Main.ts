@@ -7,7 +7,7 @@
 
 /*
     File: Main.ts
-    Author: Gabriel Hounsome
+    Author: Gabriel Hounsome & Sam
     Website: Crazy Comets
     Description: This is a side-scroller shooter game 
     where the player must shoot oncoming asteroids and 
