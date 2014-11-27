@@ -21,13 +21,13 @@ module objects {
         constructor(x:number,y:number) {
             super(x,y,'button');
             // set the frame for the button
-            this.gotoAndStop(4);
+            this.gotoAndStop(0);
         }
         overBtn() {
-            this.gotoAndStop(5);
+            this.gotoAndStop(1);
         }
         outBtn() {
-            this.gotoAndStop(4);
+            this.gotoAndStop(0);
         }
     }
 }  

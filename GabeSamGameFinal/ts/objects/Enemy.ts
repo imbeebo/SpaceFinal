@@ -31,10 +31,10 @@ module objects {
             this.health = health;
             // create a new sprite with the image; set up the height and width, registration points and the coordinates 
             if (this.name == "doge") {
-                this.gotoAndStop("aestroid_gray");
+                this.gotoAndStop("doge");
             }
             else {
-                this.gotoAndStop("aestroid_brown");
+                this.gotoAndStop("ermahgerd");
             }
             
             this.regX = this.getBounds().width *.5;

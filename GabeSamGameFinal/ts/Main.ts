@@ -176,7 +176,7 @@ class Main {
         // clear the interval and re-add it then reduce the interval time by 100 milliseconds to a minimum of 700
         window.clearInterval(this.enemies);
         this.enemies = setInterval(() => { this.createEnemy() }, this.eInterval);
-        if (this.eInterval > 750) {
+        if (this.eInterval > 1000) {
             this.eInterval -= 100;
         }
     }
