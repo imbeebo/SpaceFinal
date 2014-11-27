@@ -34,6 +34,7 @@ var playerName = '';
 var bullets: Bullet[] = [];
 var bulletContainer: createjs.Container;
 var currentMenu: createjs.Container;
+var gameLevel: number;
 // main class 
 class Main {
     // private variables for the class
@@ -61,9 +62,19 @@ class Main {
     private enemyCharacter: string;
     private playerCharacter: string;
 
+    private enemiesSpawn: number = 1;
+    private enemyHealth: number = 100;
+
+
+    
+
+
     // Main class constructor Set up the board.
     constructor(canvas: HTMLCanvasElement) {
         // set up the stage and add a message
+        gameLevel = 1;
+
+
         this.canvas = canvas;
         this.game = new createjs.Container();
         bulletContainer = new createjs.Container();
@@ -92,6 +103,23 @@ class Main {
         managers.Assets.loader.addEventListener("complete", (e: createjs.Event) => { this.onComplete(e) });
         managers.Assets.loader.addEventListener('progress', (e: createjs.Event) => { this.loading(e) });
     }
+    private setLevelVariables() {
+        if (gameLevel == 1) {
+            this.background.setBackgroundSpeed(100);
+            this.enemiesSpawn = 1;
+            this.enemyHealth = 100;
+        }
+        else if (gameLevel == 2) {
+            this.background.setBackgroundSpeed(150);
+            scoreBoard.setLife(1.15);
+            this.enemiesSpawn = 2;
+        }
+        if (gameLevel == 3) {
+            this.background.setBackgroundSpeed(250);
+            scoreBoard.setLife(1.20);
+            this.enemyHealth = 150;
+        }
+    }
     // Show loading progress to the user
     private loading(e: createjs.Event) {
         this.message.text = 'Loading: ' + Math.round(e.progress * 100) + '%';
@@ -106,6 +134,8 @@ class Main {
         var backgroundImg = <HTMLImageElement> managers.Assets.loader.getResult('background')
         this.background = new Background(backgroundImg, this.canvas);
         this.bgContainer.addChild(this.background);
+
+        this.setLevelVariables();
         //this.background = new Background();
 
 
@@ -132,10 +162,12 @@ class Main {
     private createEnemy() {
         // create a variable that references a new enemy object, pass it the stage and container
         //console.log(
-        var newAsteroid = new objects.Enemy(this.STAGE_WIDTH, 0, 'enemy', this.stage, this.asteroidContainer, this.enemyCharacter);
-        this.asteroidContainer.addChild(newAsteroid);
-        // push the variable into an array 
-        this.asteroidArray.push(newAsteroid);
+        for(var i = 0; i < this.enemiesSpawn; i++){
+            var newAsteroid = new objects.Enemy(this.STAGE_WIDTH, 0, 'enemy', this.stage, this.asteroidContainer, this.enemyCharacter, this.enemyHealth);
+            this.asteroidContainer.addChild(newAsteroid);
+            // push the variable into an array 
+            this.asteroidArray.push(newAsteroid);
+        }
         // update the stage.
         // clear the interval and re-add it then reduce the interval time by 100 milliseconds to a minimum of 700
         window.clearInterval(this.enemies);
@@ -345,12 +377,23 @@ class Main {
     // this is the ticker class
     private tick(e: createjs.TickerEvent, e2: createjs.Event) {
         var ds = e.delta / 1000;
+
+        if (scoreBoard != null) {
+            if (scoreBoard.getEnemiesDestroyed() == 5) {
+                gameLevel = 2;
+                console.log(gameLevel);
+                this.setLevelVariables();
+            }
+            else if (scoreBoard.getEnemiesDestroyed() == 2) {
+                gameLevel = 5;
+                console.log(gameLevel);
+                this.setLevelVariables();
+            }
+        }
+
         // move the background image
         this.background.tick(ds);
         // if the game state is true...
-
-
-
         if (gameOn) {
             // this handles the score multiplier, reset it to 1 after 10 seconds
             if (this.multiTimer <= createjs.Ticker.getTime() && scoreBoard.getMulti() == 2) {
@@ -380,9 +423,6 @@ class Main {
     // game over :(
     private gameOver(e: createjs.Event) {
         // remove all children from the game container and all event listeners from the stage.
-
-        
-
         asteroidExplosions = [];
         bullets = [];
         this.asteroidArray = [];

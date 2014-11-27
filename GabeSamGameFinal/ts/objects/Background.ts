@@ -20,6 +20,7 @@
 class Background extends createjs.Shape {
     // private variable
     private img: HTMLImageElement;
+    private backgroundSpeed: number;
     // constructor for the background image
     constructor(img: HTMLImageElement, canvas: HTMLCanvasElement) {
         super(new createjs.Graphics());
@@ -31,7 +32,10 @@ class Background extends createjs.Shape {
     }
     // move the background image.
     public tick(ds: number) {
-        this.x = (this.x - ds * 150) % this.img.width;
+        this.x = (this.x - ds * this.backgroundSpeed) % this.img.width;
+    }
+    public setBackgroundSpeed(speed: number) {
+        this.backgroundSpeed = speed;
     }
 }
 

@@ -49,22 +49,16 @@ module objects {
             var angle = Math.atan2(this.stage.mouseY - this.y, this.stage.mouseX - this.x);
             angle = angle * (180 / Math.PI);    
 
-            createjs.Tween.get(this).to({ x: this.stage.mouseX, y: this.stage.mouseY, rotation: angle}, 300, createjs.Ease.sineIn);
-
-
-
-
-            
-
             if (this.x > (this.oldX + 10) || this.stage.mouseX < (this.oldX - 10) || this.stage.mouseY > (this.oldY + 10) || this.stage.mouseY < (this.oldY - 10)) {
                 //this.rotation = angle;
                 this.oldX = this.stage.mouseX;
                 this.oldY = this.stage.mouseY;
-                //createjs.Tween.get(this).to({ }, 300, createjs.Ease.sineIn);
+                createjs.Tween.get(this).to({ x: this.stage.mouseX, y: this.stage.mouseY, rotation: angle }, 300, createjs.Ease.sineIn);
+
             }
             this.shipAngle.text = this.rotation.toString();
         }
-        // destroy the ship. WARNING!! You want to avoid having this called, cause it means the game is over.
+        //// destroy the ship. WARNING!! You want to avoid having this called, cause it means the game is over.
         //destroy() {
         //    this.game.removeChild(this);
         //}

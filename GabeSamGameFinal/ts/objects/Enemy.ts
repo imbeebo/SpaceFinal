@@ -24,10 +24,11 @@ module objects {
         enemyC: createjs.Container;
         shootInterval: number;
         // constructor for the enemy
-        constructor(x: number, y: number, name: string, stage: createjs.Stage, enemyC: createjs.Container, character: string) {
+        constructor(x: number, y: number, name: string, stage: createjs.Stage, enemyC: createjs.Container, character: string, health: number) {
             super(x, y, name, stage);
             this.enemyC = enemyC;
             this.name = character;
+            this.health = health;
             // create a new sprite with the image; set up the height and width, registration points and the coordinates 
             if (this.name == "doge") {
                 this.gotoAndStop("aestroid_gray");
@@ -79,6 +80,8 @@ module objects {
             this.health = 0;
             // update the scoreboard, passing the x location of the enemy as the score
             scoreBoard.update(Math.floor(this.x));
+            scoreBoard.incrementEnemiesDestroyed();
+            console.log(scoreBoard.getEnemiesDestroyed());
             // add the explosion to the game container and update the stage.
         }
         // damage the enemy

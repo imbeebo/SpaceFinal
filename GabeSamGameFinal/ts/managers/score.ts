@@ -24,6 +24,7 @@ module managers {
         private game: createjs.Container;
         private scoreMultiplier = 1;
         private oldScore: number;
+        private enemiesDestroyed: number=0;
 
         // constructor for the scoreboard
         constructor(game: createjs.Container) {
@@ -79,6 +80,12 @@ module managers {
                 return false;
             }
         }
+        getEnemiesDestroyed(): number {
+            return this.enemiesDestroyed;
+        }
+        incrementEnemiesDestroyed() {
+            this.enemiesDestroyed++;
+        }
         changeMulti(n: number) {
             this.scoreMultiplier = n;
             this.scoreText.text = "Score: " + gameScore + ' x' + this.scoreMultiplier;
@@ -91,7 +98,9 @@ module managers {
         getMulti(): number {
             return this.scoreMultiplier;
         }
-
+        setLife(percentage: number) {
+            this.lives = this.lives * percentage;
+        }
         giveLife() {
             this.lives += 1;
             this.livesText.text = "Lives: " + this.lives;
