@@ -81,7 +81,6 @@ module objects {
             // update the scoreboard, passing the x location of the enemy as the score
             scoreBoard.update(Math.floor(this.x));
             scoreBoard.incrementEnemiesDestroyed();
-            console.log(scoreBoard.getEnemiesDestroyed());
             // add the explosion to the game container and update the stage.
         }
         // damage the enemy
