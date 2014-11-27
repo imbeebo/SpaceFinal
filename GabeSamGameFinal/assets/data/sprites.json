@@ -147,17 +147,10 @@
     [260, 1034, 256, 256]
 ],
     "animations": {
-        "shipAnimate": [ 118, 125 ],
         "bullet_explosion": [ 7, 23 ],
-        "ship_explosion": [ 126, 142 ],
         "asteroid_explosion": [ 24, 113 ],
-        "aestroid_brown": [ 0 ],
-        "aestroid_dark": [ 1 ],
-        "aestroid_gray": [ 2 ],
-        "aestroid_gray_2": [ 3 ],
         "btnNormal": [ 4 ],
         "btnOver": [ 5 ],
-        "bullet": [ 6 ],
         "gold": [ 114 ],
         "multiply": [ 115 ],
         "nuke": [ 116 ],
