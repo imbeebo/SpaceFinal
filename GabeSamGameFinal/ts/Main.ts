@@ -35,6 +35,9 @@ var bullets: Bullet[] = [];
 var bulletContainer: createjs.Container;
 var currentMenu: createjs.Container;
 var gameLevel: number;
+var playerCharacter;
+var enemyCharacter;
+
 // main class 
 class Main {
     // private variables for the class
@@ -59,15 +62,14 @@ class Main {
     private eInterval: number = 4000;
     private MULTI_AMOUNT: number = 10000;
     private multiTimer: number;
-    private enemyCharacter: string;
-    private playerCharacter: string;
 
     private enemiesSpawn: number = 1;
     private enemyHealth: number = 100;
     private levelIncrementChecker: number = 0;
-
-
     
+
+
+
 
 
     // Main class constructor Set up the board.
@@ -89,14 +91,12 @@ class Main {
         this.message.x = canvas.width * .5;
         this.message.y = canvas.height * .5;
         this.game.addChild(this.message);
-        this.stage.addChild(this.bgContainer, this.game, bulletContainer, this.asteroidContainer);
+        this.stage.addChild(this.bgContainer, this.game);
         // enable mouse and dom events
         this.stage.enableMouseOver();
         this.stage.enableDOMEvents(true);
 
 
-        this.enemyCharacter = "ermahgerd";
-        this.playerCharacter = "doge";
 
 
         // load the assets
@@ -105,7 +105,7 @@ class Main {
         managers.Assets.loader.addEventListener('progress', (e: createjs.Event) => { this.loading(e) });
     }
     private setLevelVariables() {
-        if (gameLevel == 1 ) {
+        if (gameLevel == 1) {
             this.background.setBackgroundSpeed(100);
             this.enemiesSpawn = 1;
             this.enemyHealth = 100;
@@ -145,16 +145,17 @@ class Main {
 
         // set up the tick event, start the music and set the framerate
         createjs.Ticker.on('tick', (e2: createjs.TickerEvent) => { this.tick(e2, e) });
-        createjs.Sound.play("music", { loop: -1, volume: 0.4 });
+        createjs.Sound.play("menuMusic", { loop: -1, volume: 0.4 });
         createjs.Ticker.setFPS(120);
         //add the background, update the stage and open the front menu
 
         this.showNameForm(e);
     }
     private frontMenu(e: createjs.Event) {
-        
+        createjs.Sound.stop();
+        createjs.Sound.play("menuMusic", { loop: -1, volume: 0.4 });
         // add the buttons to the game container and add it to the stage.
-        
+
         this.game.removeChild(this.message);
         // get the form
         currentMenu = new menus.FrontMenu(this.canvas, this, this.message, this.game);
@@ -166,8 +167,8 @@ class Main {
     private createEnemy() {
         // create a variable that references a new enemy object, pass it the stage and container
         //console.log(
-        for(var i = 0; i < this.enemiesSpawn; i++){
-            var newAsteroid = new objects.Enemy(this.STAGE_WIDTH, 0, 'enemy', this.stage, this.asteroidContainer, this.enemyCharacter, this.enemyHealth);
+        for (var i = 0; i < this.enemiesSpawn; i++) {
+            var newAsteroid = new objects.Enemy(this.STAGE_WIDTH, 0, 'enemy', this.stage, this.asteroidContainer, this.enemyHealth);
             this.asteroidContainer.addChild(newAsteroid);
             // push the variable into an array 
             this.asteroidArray.push(newAsteroid);
@@ -196,15 +197,15 @@ class Main {
             var collision = ndgmr.checkPixelCollision(cPower, this.ship, 0);
             // check for a collision between powerup and ship
             if (collision) {
-                if (cPower.name == '114') { scoreBoard.update(1000); }
-                else if (cPower.name == '115') { scoreBoard.changeMulti(2); this.multiTimer = createjs.Ticker.getTime() + this.MULTI_AMOUNT; }
-                else if (cPower.name == '116') {
+                if (cPower.name == '112') { scoreBoard.update(1000); }
+                else if (cPower.name == '113') { scoreBoard.changeMulti(2); this.multiTimer = createjs.Ticker.getTime() + this.MULTI_AMOUNT; }
+                else if (cPower.name == '114') {
                     for (var i in this.asteroidArray) {
                         var asteroidObj = this.asteroidArray[i];
                         asteroidObj.destroy();
                     }
                 }
-                else if (cPower.name == '117') { scoreBoard.giveLife(); }
+                else if (cPower.name == '115') { scoreBoard.giveLife(); }
                 this.removeElement(cPower, this.powersArray, this.game);
             }
             cPower.tick(ds);
@@ -216,11 +217,14 @@ class Main {
     }
     // Start the game.
     public startGame(e: createjs.Event) {
+        createjs.Sound.stop();
+        createjs.Sound.play("music", { loop: -1, volume: 0.4 });
         // hide the cursor
         //this.stage.cursor = "none";
         // remove all children from the game container.
         this.game.removeAllChildren();
         // set the game state to true and the game over screen to false
+        this.game.addChild(bulletContainer, this.asteroidContainer);
 
         this.gameOverScreen = false;
         // set the score to 0 and the interval to 5 seconds
@@ -252,42 +256,33 @@ class Main {
     // move the asteroids.
     private moveAsteroids(ds: number) {
         // loop through each asteroid 
-        for (var i in this.asteroidArray) {
-            var asteroidObj = this.asteroidArray[i];
-            // if its health is <= 0, delete it from the array
-            if ((asteroidObj.x <= 0 - (asteroidObj.getBounds().width))) {
-                this.removeElement(asteroidObj, this.asteroidArray, this.asteroidContainer);
-            }
-            if (asteroidObj.health <= 0) {
-                asteroidObj.destroy();
-
-                this.removeElement(asteroidObj, this.asteroidArray, this.asteroidContainer);
-            }
-            // otherwise move the asteroid onwards
-            else {
-                asteroidObj.tick(ds);
-                // check for collisions between asteroid and the ship
-                var collision = ndgmr.checkPixelCollision(asteroidObj, this.ship, 0);
-                // if a collision happens...
-                if (collision) {
-                    // destroy the asteroid
+        if (gameOn) {
+            for (var i in this.asteroidArray) {
+                var asteroidObj = this.asteroidArray[i];
+                // if its health is <= 0, delete it from the array
+                if ((asteroidObj.x <= 0 - (asteroidObj.getBounds().width))) {
+                    asteroidObj.stopEnemyShooting();
+                    this.removeElement(asteroidObj, this.asteroidArray, this.asteroidContainer);
+                }
+                if (asteroidObj.health <= 0) {
                     asteroidObj.destroy();
-                    // if the player is out of lives...
-                    if (scoreBoard.loseLife(true)) {
 
-                        // destroy ship.
-                        this.game.removeChild(this.ship);
-                        // start ship explosion
-                        shipExplode = new createjs.Sprite(managers.Assets.atlas, "ship_explosion");
-                        shipExplode.x = this.ship.x - (this.ship.getBounds().width * 1.5);
-                        shipExplode.y = this.ship.y - (this.ship.getBounds().height * 1.5);
-                        shipExplode.play();
-                        // play explosion sound
-                        createjs.Sound.play("asteroidExplosion");
-                        // add explosion to the game container
-                        this.game.addChild(shipExplode);
-                        // set the game to false
-                        gameOn = false;
+                    this.removeElement(asteroidObj, this.asteroidArray, this.asteroidContainer);
+                }
+                // otherwise move the asteroid onwards
+                else {
+                    asteroidObj.tick(ds);
+                    // check for collisions between asteroid and the ship
+                    var collision = ndgmr.checkPixelCollision(asteroidObj, this.ship, 0);
+                    // if a collision happens...
+                    if (collision) {
+                        // destroy the asteroid
+                        asteroidObj.destroy();
+                        // if the player is out of lives...
+                        if (scoreBoard.loseLife(true)) {
+
+                            this.outOfLives();
+                        }
                     }
                 }
             }
@@ -295,7 +290,7 @@ class Main {
         // do the asteroid explosions, loop through the array for each explosion and check if it still has frames to display
         for (var i in asteroidExplosions) {
             var aExplosion = asteroidExplosions[i];
-            if (aExplosion.currentFrame == 113) {
+            if (aExplosion.currentFrame == 110) {
                 // stop the animation and remove it from the game container and array
                 aExplosion.stop();
                 this.removeElement(aExplosion, asteroidExplosions, this.asteroidContainer);
@@ -304,7 +299,23 @@ class Main {
         }
         this.asteroidContainer.updateCache();
     }
-
+    private outOfLives() {
+        // destroy ship.
+        this.game.removeChild(this.ship);
+        // start ship explosion
+        shipExplode = new createjs.Sprite(managers.Assets.atlas, "asteroid_explosion");
+        shipExplode.x = this.ship.x - (this.ship.getBounds().width * 1.5);
+        shipExplode.y = this.ship.y - (this.ship.getBounds().height * 1.5);
+        shipExplode.play();
+        // play explosion sound
+        createjs.Sound.play("asteroidExplosion");
+        // add explosion to the game container
+        asteroidExplosions.push(shipExplode);
+        this.asteroidContainer.addChild(shipExplode);
+        // set the game to false
+        gameOn = false;
+        this.gameOver();
+    }
     // move the bullets! PEW-PEW!
     private moveBullets(ds: number) {
         // loop through the bullets array and move them closer to the edge of the screen.
@@ -346,7 +357,9 @@ class Main {
                 var collision = ndgmr.checkRectCollision(this.ship, bulletBox);
                 // if a collision happens...
                 if (collision) {
-                    scoreBoard.loseLife(false);
+                    if (scoreBoard.loseLife(false)) {
+                        this.outOfLives();
+                    }
                     this.removeElement(bullet, bullets, bulletContainer);
                     // create an explosion for the bullet and put it into an explosion array
                     var explosionSprite = new createjs.Sprite(managers.Assets.atlas, "bullet_explosion");
@@ -370,7 +383,7 @@ class Main {
         // do the bullet explosions, loop through the array for each explosion and check if it still has frames to display
         for (var i in explosions) {
             var explosion = explosions[i];
-            if (explosion.currentFrame == 23) {
+            if (explosion.currentFrame == 18) {
                 // stop the animation and remove it from the game container and array
                 explosion.stop();
                 this.removeElement(explosion, explosions, bulletContainer);
@@ -385,12 +398,10 @@ class Main {
         if (scoreBoard != null) {
             if (scoreBoard.getEnemiesDestroyed() >= 5 && this.levelIncrementChecker == 2) {
                 gameLevel = 3;
-                console.log(gameLevel);
                 this.setLevelVariables();
             }
             else if (scoreBoard.getEnemiesDestroyed() >= 2 && this.levelIncrementChecker == 1) {
                 gameLevel = 2;
-                console.log(gameLevel);
                 this.setLevelVariables();
             }
         }
@@ -403,32 +414,34 @@ class Main {
             if (this.multiTimer <= createjs.Ticker.getTime() && scoreBoard.getMulti() == 2) {
                 scoreBoard.resetMulti();
             }
-            // move the asteroids!
-            this.moveAsteroids(ds);
             this.movePowerUps(ds);
 
+            // move the asteroids!
+            this.moveAsteroids(ds);
             // move the bullets!
-            this.moveBullets(ds);
-        }
-        // do the ship explosion, loop through the array for each explosion and check if it still has frames to display
-        if (shipExplode != null) {
-            if (shipExplode.currentFrame == 142) {
-                // stop the animation and remove it from the game container and array
-                shipExplode.stop();
-                this.game.removeChild(shipExplode);
-                shipExplode = null;
-                // end the game
-                this.gameOver(e2);
+            if (gameOn) {
+                this.moveBullets(ds);
             }
         }
         // update the stage
         this.stage.update(e);
     }
     // game over :(
-    private gameOver(e: createjs.Event) {
+    private gameOver() {
+        createjs.Sound.stop();
+        createjs.Sound.play("menuMusic", { loop: -1, volume: 0.4 });
         // remove all children from the game container and all event listeners from the stage.
+        this.destroyArray(asteroidExplosions);
+        this.destroyArray(bullets);
+        this.destroyArray(explosions);
+        for (var i in this.asteroidArray) {
+            this.asteroidArray[i].stopEnemyShooting();
+        }
+        this.destroyArray(this.asteroidArray);
+
         asteroidExplosions = [];
         bullets = [];
+        explosions = [];
         this.asteroidArray = [];
         this.asteroidContainer.removeAllChildren();
         bulletContainer.removeAllChildren();
@@ -437,10 +450,10 @@ class Main {
         // set the cursor back to normal
         this.stage.cursor = "default";
         // create the back button and text with the mouse over and click events
-        
+
         window.clearInterval(this.powerupInterval);
         window.clearInterval(this.enemies);
-        
+
 
         send(playerName, gameScore);
         this.asteroidContainer.updateCache();
@@ -452,7 +465,7 @@ class Main {
         this.game.addChild(currentMenu);
         this.stage.update();
         // add the message and button to the container and add the container to the stage then update.
-        
+
     }
     // mouse move event
     private stageMouseMove(e: createjs.MouseEvent) {
@@ -471,7 +484,7 @@ class Main {
             if (this.debounce + 250 < newTime && gameOn) {
                 // create two bullets for the ship and put them into an array
                 var newBullet = managers.Assets.atlas.getFrame(6).image;
-                var bulletL = new Bullet(this.stage, this.playerCharacter, true, this.ship.rotation);
+                var bulletL = new Bullet(this.stage, playerCharacter, true, this.ship.rotation);
                 //var bulletL = new Bullet(this.ship.rotation, this.stage, "doge");
 
                 bullets.push(bulletL);
@@ -499,6 +512,15 @@ class Main {
         stage.removeChild(el);
         var index = arr.indexOf(el);
         arr.splice(index, 1);
+    }
+    private destroyArray(arr: any[]) {
+        for (var i in arr) {
+            var el = arr[i];
+            this.stage.removeChild(el);
+            this.asteroidContainer.removeChild(el);
+            bulletContainer.removeChild(el);
+            arr.splice(i, 1);
+        }
     }
 }
 // when the page has loaded, execute this.

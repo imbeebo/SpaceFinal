@@ -24,19 +24,13 @@ module objects {
         enemyC: createjs.Container;
         shootInterval: number;
         // constructor for the enemy
-        constructor(x: number, y: number, name: string, stage: createjs.Stage, enemyC: createjs.Container, character: string, health: number) {
+        constructor(x: number, y: number, name: string, stage: createjs.Stage, enemyC: createjs.Container, health: number) {
             super(x, y, name, stage);
             this.enemyC = enemyC;
-            this.name = character;
+            this.name = enemyCharacter;
             this.health = health;
             // create a new sprite with the image; set up the height and width, registration points and the coordinates 
-            if (this.name == "doge") {
-                this.gotoAndStop("doge");
-            }
-            else {
-                this.gotoAndStop("ermahgerd");
-            }
-            
+            this.gotoAndStop(enemyCharacter);
             this.regX = this.getBounds().width *.5;
             this.regY = this.getBounds().height * .5;
             
@@ -63,6 +57,9 @@ module objects {
             // move the enemy on an angle
             this.y += ds * this.angleVelocity;
         }  
+        stopEnemyShooting() {
+            window.clearInterval(this.shootInterval);
+        }
         // Destroy the enemy
         destroy() {
             window.clearInterval(this.shootInterval);

@@ -99,7 +99,7 @@ module managers {
             return this.scoreMultiplier;
         }
         setLife(percentage: number) {
-            this.lives = this.lives * percentage;
+            this.lives = Math.round(this.lives * percentage);
             this.livesText.text = "Health: " + this.lives;
         }
         giveLife() {

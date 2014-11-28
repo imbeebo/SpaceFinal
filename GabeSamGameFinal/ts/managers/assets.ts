@@ -18,18 +18,13 @@ module managers {
     // Image and Sound Manifest;
     var assetManifest = [
         { src: 'assets/images/BackgroundB1.jpg', id: 'background' },
-        { src: 'assets/sounds/music.mp3', id: 'music' },
+        { src: 'assets/sounds/music.mp3', id: 'menuMusic' },
+        { src: 'assets/sounds/backgroundMusic.mp3', id: 'music' },
         { src: 'assets/sounds/Laser.mp3', id: 'laser' },
         { src: 'assets/sounds/Explosion.mp3', id: 'explosion' },
         { src: 'assets/sounds/asteroidExplode.mp3', id: 'asteroidExplosion' },
         { src: 'assets/data/sprites.json', id: 'spriteSheet' },
-        { src: 'assets/images/spriteSheet.png', id: 'spriteImg' },
-        { src: 'assets/images/star001.png', id: 'star1' },
-        { src: 'assets/images/star002.png', id: 'star2' },
-        { src: 'assets/images/star003.png', id: 'star3' },
-        { src: 'assets/images/star004.png', id: 'star4' },
-        { src: 'assets/images/star005.png', id: 'star5' },
-        { src: 'assets/images/star006.png', id: 'star6' },
+        { src: 'assets/images/spriteSheet.png', id: 'spriteImg' }
     ];
 
     // Asset Manager Class

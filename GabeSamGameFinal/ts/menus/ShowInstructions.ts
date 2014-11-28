@@ -20,7 +20,7 @@
             backBtnText.on("mouseout", function () { backBtn.outBtn() });
             backBtnText.cursor = "pointer";
             backBtnText.x = backBtn.x - 20;
-            backBtnText.y = backBtn.y - 55;
+            backBtnText.y = backBtn.y - 10;
             // create the instructions message
             message = new createjs.Text('', 'bold 30px Segoe UI', '#ffffff');
             message.font = 'bold 15px Segoe UI';

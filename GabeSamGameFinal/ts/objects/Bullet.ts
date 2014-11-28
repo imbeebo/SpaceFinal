@@ -30,7 +30,7 @@ class Bullet extends createjs.Text {
         super("", "", "#d3d3d3")
         this.playerShot = playerShot;
         this.character = character;
-        if (this.character == "doge") {
+        if (this.character == "doge" || this.character == "dogePlayer") {
             this.font = "Bold 15px Comic Sans MS";
             var randomNum = rand(0, this.dogeMemes.length - 1);
             this.text = this.dogeMemes[randomNum];

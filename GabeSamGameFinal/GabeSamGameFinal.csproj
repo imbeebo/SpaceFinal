@@ -29,6 +29,7 @@
     <Content Include="assets\images\star005.png" />
     <Content Include="assets\images\star006.png" />
     <Content Include="assets\sounds\asteroidExplode.mp3" />
+    <Content Include="assets\sounds\backgroundMusic.mp3" />
     <Content Include="assets\sounds\Explosion.mp3" />
     <Content Include="assets\sounds\Laser.mp3" />
     <Content Include="assets\sounds\music.mp3" />
@@ -40,6 +41,7 @@
     <Content Include="js\soundjs-0.5.2.min.js" />
     <TypeScriptCompile Include="ts\managers\assets.ts" />
     <TypeScriptCompile Include="ts\managers\score.ts" />
+    <TypeScriptCompile Include="ts\menus\ChoosePlayer.ts" />
     <TypeScriptCompile Include="ts\menus\FrontMenu.ts" />
     <TypeScriptCompile Include="ts\menus\GameOver.ts" />
     <TypeScriptCompile Include="ts\menus\HighScores.ts" />
@@ -76,6 +78,7 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <Content Include="assets\data\sprites.json" />
+    <Content Include="assets\sounds\sound Clip.aup" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

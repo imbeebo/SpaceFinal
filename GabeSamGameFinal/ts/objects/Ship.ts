@@ -23,7 +23,6 @@ module objects {
         game: createjs.Container;
         oldX =0;
         oldY = 0;
-        shipAngle: createjs.Text;
         // constructor for the ship
         constructor(stage: createjs.Stage, game: createjs.Container) {
             super(200, 30, "ship");
@@ -31,32 +30,30 @@ module objects {
             this.game = game;
             this.stage = stage;
             // set up the ship animation. Set the width and height
-            this.gotoAndPlay("shipAnimate");
+            this.gotoAndStop(playerCharacter);
             // set the registration points and add the ship to the stage
-            this.shipAngle = new createjs.Text('', 'bold 15px Segoe UI', '#FFFFFF');
-            this.shipAngle.y = 10;
-            this.shipAngle.x = 200;
             this.x = 100;
             this.y = 200;
+
             this.regX = this.getBounds().width * .5;
             this.regY = this.getBounds().height * .5;
-            this.game.addChild(this.shipAngle);
+
             this.oldX = 10;
             this.oldY = 10;
         }
         // update the ship location
         update(e: createjs.MouseEvent) {
-            var angle = Math.atan2(this.stage.mouseY - this.y, this.stage.mouseX - this.x);
-            angle = angle * (180 / Math.PI);    
+            //var angle = Math.atan2(this.stage.mouseY - this.y, this.stage.mouseX - this.x);
+            //angle = angle * (180 / Math.PI);    
 
             if (this.x > (this.oldX + 10) || this.stage.mouseX < (this.oldX - 10) || this.stage.mouseY > (this.oldY + 10) || this.stage.mouseY < (this.oldY - 10)) {
                 //this.rotation = angle;
                 this.oldX = this.stage.mouseX;
                 this.oldY = this.stage.mouseY;
-                createjs.Tween.get(this).to({ x: this.stage.mouseX, y: this.stage.mouseY, rotation: angle }, 300, createjs.Ease.sineIn);
+                //createjs.Tween.get(this).to({ x: this.stage.mouseX, y: this.stage.mouseY, rotation: angle }, 300, createjs.Ease.sineIn);
+                createjs.Tween.get(this).to({ x: this.stage.mouseX, y: this.stage.mouseY }, 300, createjs.Ease.sineIn);
 
             }
-            this.shipAngle.text = this.rotation.toString();
         }
         //// destroy the ship. WARNING!! You want to avoid having this called, cause it means the game is over.
         //destroy() {

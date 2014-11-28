@@ -15,14 +15,14 @@
             // create the play button and text with the mouse over and click events
             var playButton = new objects.Button((canvas.width * .5) - (64), canvas.height * .5);
             var playBtnText = new createjs.Text('Play', 'bold 15px Segoe UI', '#e66000');
-            playBtnText.on("click", (e: createjs.Event) => { mainGame.startGame(e); });
+            playBtnText.on("click", (e: createjs.Event) => { currentMenu = new menus.ChoosePlayer(mainGame, message, game) });
             playBtnText.on("mouseover", function () { playButton.overBtn() });
             playBtnText.on("mouseout", function () { playButton.outBtn() });
-            playButton.on("click", (e: createjs.Event) => { mainGame.startGame(e); });
+            playButton.on("click", (e: createjs.Event) => { currentMenu = new menus.ChoosePlayer(mainGame, message, game) });
             playButton.on("mouseover", function () { playButton.overBtn() });
             playButton.on("mouseout", function () { playButton.outBtn() });
             playBtnText.x = playButton.x - 15;
-            playBtnText.y = playButton.y - 55;
+            playBtnText.y = playButton.y - 10;
             playButton.name = 'play';
             playBtnText.name = 'play';
             playButton.cursor = "pointer";
@@ -39,7 +39,7 @@
             insBtnText.on("mouseover", function () { instructionButton.overBtn() });
             insBtnText.on("mouseout", function () { instructionButton.outBtn() });
             insBtnText.x = instructionButton.x - 40;
-            insBtnText.y = instructionButton.y - 55;
+            insBtnText.y = instructionButton.y - 10;
             insBtnText.name = 'instruct';
             insBtnText.cursor = "pointer";
             // create the instruction button and text with the mouse over and click events
@@ -54,7 +54,7 @@
             hsBtnText.on("mouseover", function () { highScores.overBtn() });
             hsBtnText.on("mouseout", function () { highScores.outBtn() });
             hsBtnText.x = highScores.x - 40;
-            hsBtnText.y = highScores.y - 55;
+            hsBtnText.y = highScores.y - 10;
             hsBtnText.name = 'highScore';
             hsBtnText.cursor = "pointer";
             this.addChild(playButton, playBtnText, instructionButton, insBtnText, highScores, hsBtnText);

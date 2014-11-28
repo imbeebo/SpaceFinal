@@ -29,7 +29,7 @@ module objects {
 
         constructor(x: number, y: number, name: string, stage: createjs.Stage) {
             super(x, y, name);
-            this.arrayNums = [114, 115, 116, 117];
+            this.arrayNums = [112, 113, 114, 115];
             this.weight = [0.50, 0.30, 0.10, 0.10];
             // set up the stage and game container
             var newPowerup = this.chooseFromList();

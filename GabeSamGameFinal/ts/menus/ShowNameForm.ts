@@ -12,7 +12,7 @@
 
             nameInputForm = new createjs.DOMElement(nameForm());
             nameInputForm.x = canvas.width * .5-150;
-            nameInputForm.y = canvas.height * .5-50;
+            nameInputForm.y = canvas.height * .5;
             // create the buttons and text
             var nameBtn = new objects.Button((canvas.width * .5), canvas.height * .5 + 40);
             nameBtn.on("click", (e: createjs.Event) => { this.getName(e, canvas, mainGame, message, game);  });
@@ -21,7 +21,7 @@
             nameBtn.cursor = "pointer";
             var insBtnText = new createjs.Text('Submit', 'bold 15px Segoe UI', '#e66000');
             insBtnText.x = nameBtn.x - 25;
-            insBtnText.y = nameBtn.y-55;
+            insBtnText.y = nameBtn.y-10;
             insBtnText.cursor = "pointer";
             insBtnText.on("click", (e: createjs.Event) => { this.getName(e, canvas, mainGame, message, game);});
             insBtnText.on("mouseover", function () { nameBtn.overBtn() });
