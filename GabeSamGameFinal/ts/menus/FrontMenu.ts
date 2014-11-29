@@ -15,10 +15,10 @@
             // create the play button and text with the mouse over and click events
             var playButton = new objects.Button((canvas.width * .5) - (64), canvas.height * .5);
             var playBtnText = new createjs.Text('Play', 'bold 15px Segoe UI', '#e66000');
-            playBtnText.on("click", (e: createjs.Event) => { currentMenu = new menus.ChoosePlayer(mainGame, message, game) });
+            playBtnText.on("click", (e: createjs.Event) => { currentMenu = new menus.ChoosePlayer(canvas, mainGame, message, game) });
             playBtnText.on("mouseover", function () { playButton.overBtn() });
             playBtnText.on("mouseout", function () { playButton.outBtn() });
-            playButton.on("click", (e: createjs.Event) => { currentMenu = new menus.ChoosePlayer(mainGame, message, game) });
+            playButton.on("click", (e: createjs.Event) => { currentMenu = new menus.ChoosePlayer(canvas, mainGame, message, game) });
             playButton.on("mouseover", function () { playButton.overBtn() });
             playButton.on("mouseout", function () { playButton.outBtn() });
             playBtnText.x = playButton.x - 15;

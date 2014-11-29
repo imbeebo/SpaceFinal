@@ -17,17 +17,28 @@ Royalty Free Music: royalty free music from: http://www.looperman.com/media/loop
 module objects {
     // Button Class
     export class Button extends objects.Object{
-        // constructor for the bullet
-        constructor(x:number,y:number) {
+        private over: number;
+        private out: number;
+        
+        // constructor for the buttom
+        constructor(x:number,y:number, over = 1, out = 0) {
             super(x,y,'button');
             // set the frame for the button
-            this.gotoAndStop(0);
+
+            this.over = over;
+            this.out = out;
+
+            this.gotoAndStop(this.out);
         }
         overBtn() {
-            this.gotoAndStop(1);
+            this.gotoAndStop(this.over);
         }
         outBtn() {
-            this.gotoAndStop(0);
+            this.gotoAndStop(this.out);
+        }
+        setCustomSpriteSheetIndices(over: number, out: number) {
+            this.over = over;
+            this.out = out;
         }
     }
 }  
