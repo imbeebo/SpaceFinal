@@ -33,8 +33,9 @@ module objects {
             this.gotoAndStop(enemyCharacter);
             this.regX = this.getBounds().width *.5;
             this.regY = this.getBounds().height * .5;
+            var randomShootInterval = rand(500, 3000);
             
-            this.shootInterval = setInterval(() => { this.enemyShoot() }, 750);
+            this.shootInterval = setInterval(() => { this.enemyShoot() }, randomShootInterval);
             // call the reset function
             this.reset(x);
         }

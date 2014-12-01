@@ -46,12 +46,12 @@ module objects {
             //var angle = Math.atan2(this.stage.mouseY - this.y, this.stage.mouseX - this.x);
             //angle = angle * (180 / Math.PI);    
 
-            if (this.x > (this.oldX + 10) || this.stage.mouseX < (this.oldX - 10) || this.stage.mouseY > (this.oldY + 10) || this.stage.mouseY < (this.oldY - 10)) {
+            if (this.x > (this.oldX + 5) || this.stage.mouseX < (this.oldX - 5) || this.stage.mouseY > (this.oldY + 5) || this.stage.mouseY < (this.oldY - 5)) {
                 //this.rotation = angle;
                 this.oldX = this.stage.mouseX;
                 this.oldY = this.stage.mouseY;
                 //createjs.Tween.get(this).to({ x: this.stage.mouseX, y: this.stage.mouseY, rotation: angle }, 300, createjs.Ease.sineIn);
-                createjs.Tween.get(this).to({ x: this.stage.mouseX, y: this.stage.mouseY }, 300, createjs.Ease.sineIn);
+                createjs.Tween.get(this).to({ x: this.stage.mouseX, y: this.stage.mouseY }, 150, createjs.Ease.sineIn);
 
             }
         }

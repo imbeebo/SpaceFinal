@@ -1,6 +1,6 @@
 ﻿/*
     File: ChoosePlayer.ts
-    Author: Samuel Halloran
+    Author: Gabriel Hounsome & Samuel Halloran
     Website: Space Doge
     Description: This file is used to generate the Choose Player game state in which the user selects their character
 
@@ -38,26 +38,36 @@ module menus {
             mouseOverText.x = (canvas.width * .5) - (mouseOverText.getBounds().width * .5);
             mouseOverText.y = 100;
 
-            selectDogeButton.on("click", (e: createjs.Event) => {  });
+            selectDogeButton.on("click", (e: createjs.Event) => {
+                playerCharacter = 'dogePlayer';
+                enemyCharacter = 'ermahgerd';  
+                mainGame.startGame(null);
+            });
 
             selectDogeButton.on("mouseover", function () {
                 mouseOverText.text = "Doge";
                 mouseOverText.x = (canvas.width * .5) - (mouseOverText.getBounds().width * .5);
+                selectDogeButton.alpha = .8;
             });
 
             selectDogeButton.on("mouseout", function () {
-                
+                selectDogeButton.alpha = 1;
             });
 
-            selectErmahgerdButton.on("click", (e: createjs.Event) => {  });
+            selectErmahgerdButton.on("click", (e: createjs.Event) => {
+                playerCharacter = 'ermahgerd';
+                enemyCharacter = 'doge';
+                mainGame.startGame(null);
+            });
 
             selectErmahgerdButton.on("mouseover", function () {
                 mouseOverText.text = "Ermahgerd";
                 mouseOverText.x = (canvas.width * .5) - (mouseOverText.getBounds().width * .5);
+                selectErmahgerdButton.alpha = .8;
             });
 
             selectErmahgerdButton.on("mouseout", function () {
-               
+                selectErmahgerdButton.alpha = 1;
             });
 
             // if ermahgerd is chosen, computer is set to 'doge' and player is set to ermahgerd

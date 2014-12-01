@@ -21,7 +21,7 @@ class Bullet extends createjs.Text {
     character: string;
     playerShot: boolean;
     private dogeMemes = ["so destroy", "very violence", "much fight", "very wow",
-        "very mlg", "wow", "many cat", "much coin", "very doge",
+        "very mlg", "wow", "much coin", "very doge",
         "many side scroller", "much wow", "so advanced web", "much cool",
         "many premium", "such doge"];
     private ermahgerdMemes = ["ERMAHGERD!", "GERSBERMPS!", "ERMAHGERDON!", "ERTS DURGE!",
@@ -68,8 +68,7 @@ class Bullet extends createjs.Text {
     // move the bullet
     public tick(ds: number) {   
         if (this.playerShot) {
-            this.x += 4 * Math.cos(-this.shipRotation / 180 * Math.PI);
-            this.y -= 4 * Math.sin(-this.shipRotation / 180 * Math.PI);
+            this.x += 3.5 * Math.cos(-this.shipRotation / 180 * Math.PI);
         }
         else {
             this.x -= ds * 350;
