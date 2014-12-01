@@ -8,7 +8,7 @@
 /*
     File: Main.ts
     Author: Gabriel Hounsome & Sam
-    Website: Crazy Comets
+    Website: Meme Wars
     Description: This is a side-scroller shooter game 
     where the player must shoot oncoming asteroids and 
     pickup powerups
