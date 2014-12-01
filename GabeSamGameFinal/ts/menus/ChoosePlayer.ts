@@ -2,11 +2,12 @@
     File: ChoosePlayer.ts
     Author: Gabriel Hounsome & Sam Halloran
     Website: Space Doge
-    Description: This file is used to generate the Choose Player game state in which the user selects their character
+    Description: This file is used to generate the Choose Player game state in which the user 
+    selects their character
 
-    Revision: 1.0
-    Last Modified By: Samuel Halloran
-    Date Last Modified: November 29, 2014
+    Revision: 1.1
+    Last Modified By: Gabriel Hounsome
+    Date Last Modified: November 30, 2014
 
     Citations: Used JQuery, collsion detection module from indiegamer and royalty free art from: wrathgames.com
     Royalty Free Music: royalty free music from: http://www.looperman.com/media/loops/630386/looperman-l-0630386-0077610-mrfunktastic-trap-gods-bells-140f.mp3
