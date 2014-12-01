@@ -1,6 +1,6 @@
 ﻿/*
     File: ChoosePlayer.ts
-    Author: Gabriel Hounsome & Samuel Halloran
+    Author: Gabriel Hounsome & Sam Halloran
     Website: Space Doge
     Description: This file is used to generate the Choose Player game state in which the user selects their character
 

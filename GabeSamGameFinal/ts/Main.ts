@@ -7,11 +7,11 @@
 
 /*
     File: Main.ts
-    Author: Gabriel Hounsome & Sam
+    Author: Gabriel Hounsome & Sam Halloran
     Website: Meme Wars
     Description: This is a side-scroller shooter game 
-    where the player must shoot oncoming asteroids and 
-    pickup powerups
+    where the player must shoot oncoming memes. Avoid being hit or shot by them. There are powerups to help you get through the levels
+    
 
     Revision: 1.0
     Last Modified By: Gabriel Hounsome
