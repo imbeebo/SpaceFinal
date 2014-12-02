@@ -33,7 +33,7 @@ module objects {
             this.gotoAndStop(enemyCharacter);
             this.regX = this.getBounds().width *.5;
             this.regY = this.getBounds().height * .5;
-            var randomShootInterval = rand(500, 3000);
+            var randomShootInterval = rand(300, 2500);
             
             this.shootInterval = setInterval(() => { this.enemyShoot() }, randomShootInterval);
             // call the reset function
@@ -46,7 +46,7 @@ module objects {
             bulletContainer.addChild(bulletL);
         }
         // set the forward velocity, angle velocity and rotation amount to a random value
-        private forwardVelocity = rand(150, 250);
+        private forwardVelocity = rand(300, 400);
         private angleVelocity = rand(-30, 30);
         private rotationAmount = rand(-3, 3);
         // move the enemy

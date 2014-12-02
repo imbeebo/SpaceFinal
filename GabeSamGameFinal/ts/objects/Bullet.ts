@@ -71,7 +71,7 @@ class Bullet extends createjs.Text {
             this.x += 3.5 * Math.cos(-this.shipRotation / 180 * Math.PI);
         }
         else {
-            this.x -= ds * 350;
+            this.x -= ds * 450;
         }
     }
     public playerBullet() {

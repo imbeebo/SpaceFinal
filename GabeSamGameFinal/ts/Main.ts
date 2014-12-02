@@ -56,7 +56,7 @@ class Main {
     private gameOverScreen: boolean = false;
     private ship: objects.Ship;
     private debounce: number;
-    private STAGE_WIDTH = 800;
+    private STAGE_WIDTH = 1500;
     private enemies: number;
     private powerupInterval: number;
     private eInterval: number = 4000;

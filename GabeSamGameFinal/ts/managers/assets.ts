@@ -21,6 +21,8 @@ module managers {
         { src: 'assets/sounds/music.mp3', id: 'menuMusic' },
         { src: 'assets/sounds/backgroundMusic.mp3', id: 'music' },
         { src: 'assets/sounds/Laser.mp3', id: 'laser' },
+        { src: 'assets/sounds/doge.ogg', id: 'dogeBark' },
+        { src: 'assets/sounds/ermahgerd.ogg', id: 'ermahgerdShoot' },
         { src: 'assets/sounds/Explosion.mp3', id: 'explosion' },
         { src: 'assets/sounds/asteroidExplode.mp3', id: 'asteroidExplosion' },
         { src: 'assets/data/sprites.json', id: 'spriteSheet' },
