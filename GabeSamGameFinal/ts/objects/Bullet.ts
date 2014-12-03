@@ -35,7 +35,9 @@ class Bullet extends createjs.Text {
             var randomNum = rand(0, this.dogeMemes.length - 1);
             this.text = this.dogeMemes[randomNum];
             this.regX = (this.dogeMemes[randomNum].length * 7) * .5;
-            this.regY = 10 * 1.5;
+            this.regY = 10 * 1.5;    
+            // create a sound for the bullets
+            createjs.Sound.play("dogeBark");
         }
         else {
             this.font = "Bold 15px Arial";
@@ -43,6 +45,8 @@ class Bullet extends createjs.Text {
             this.text = this.ermahgerdMemes[randomNum];
             this.regX = (this.ermahgerdMemes[randomNum].length * 7) * .5;
             this.regY = 10 * 1.5;
+            // create a sound for the bullets
+            createjs.Sound.play("ermahgerdShoot");
         }
 
 

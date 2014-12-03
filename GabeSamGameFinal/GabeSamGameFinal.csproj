@@ -30,6 +30,8 @@
     <Content Include="assets\images\star006.png" />
     <Content Include="assets\sounds\asteroidExplode.mp3" />
     <Content Include="assets\sounds\backgroundMusic.mp3" />
+    <Content Include="assets\sounds\bark.mp3" />
+    <Content Include="assets\sounds\ermahgerd.mp3" />
     <Content Include="assets\sounds\Explosion.mp3" />
     <Content Include="assets\sounds\Laser.mp3" />
     <Content Include="assets\sounds\music.mp3" />
@@ -71,6 +73,7 @@
     <TypeScriptCompile Include="ts\objects\Powerup.ts" />
     <TypeScriptCompile Include="ts\objects\Ship.ts" />
     <TypeScriptCompile Include="ts\Scripts\typings\jquery.ts" />
+    <TypeScriptCompile Include="ts\Scripts\typings\mongodb.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="ts\Main.ts" />

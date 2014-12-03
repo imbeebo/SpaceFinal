@@ -62,6 +62,7 @@ class Main {
     private eInterval: number = 4000;
     private MULTI_AMOUNT: number = 10000;
     private multiTimer: number;
+    private levelMessageInterval: number;
 
     private enemiesSpawn: number = 1;
     private enemyHealth: number = 100;
@@ -106,24 +107,39 @@ class Main {
     }
     private setLevelVariables() {
         if (gameLevel == 1) {
+            this.message.text = "Welcome to Level 1...";
+            this.game.addChild(this.message);
+            this.levelMessageInterval = setInterval(() => { this.hideMessage() }, 4000);
             this.background.setBackgroundSpeed(100);
             this.enemiesSpawn = 1;
             this.enemyHealth = 100;
             this.levelIncrementChecker++;
         }
         else if (gameLevel == 2) {
+            this.message.text = "Welcome to Level 2...";
+            this.game.addChild(this.message);
+            this.levelMessageInterval = setInterval(() => { this.hideMessage() }, 4000);
             this.background.setBackgroundSpeed(150);
             scoreBoard.setLife(1.15);
             this.enemiesSpawn = 2;
             this.levelIncrementChecker++;
         }
         else if (gameLevel == 3) {
+            this.message.text = "Welcome to Level 3...";
+            this.game.addChild(this.message);
+            this.levelMessageInterval = setInterval(() => { this.hideMessage() }, 4000);
             this.background.setBackgroundSpeed(250);
             scoreBoard.setLife(1.20);
             this.enemyHealth = 150;
             this.levelIncrementChecker++;
         }
     }
+
+    private hideMessage() {
+        window.clearInterval(this.levelMessageInterval);
+        this.game.removeChild(this.message);
+    }
+
     // Show loading progress to the user
     private loading(e: createjs.Event) {
         this.message.text = 'Loading: ' + Math.round(e.progress * 100) + '%';
@@ -396,11 +412,11 @@ class Main {
         var ds = e.delta / 1000;
 
         if (scoreBoard != null) {
-            if (scoreBoard.getEnemiesDestroyed() >= 5 && this.levelIncrementChecker == 2) {
+            if (scoreBoard.getEnemiesDestroyed() >= 150 && this.levelIncrementChecker == 2) {
                 gameLevel = 3;
                 this.setLevelVariables();
             }
-            else if (scoreBoard.getEnemiesDestroyed() >= 2 && this.levelIncrementChecker == 1) {
+            else if (scoreBoard.getEnemiesDestroyed() >= 50 && this.levelIncrementChecker == 1) {
                 gameLevel = 2;
                 this.setLevelVariables();
             }
@@ -490,8 +506,7 @@ class Main {
                 bullets.push(bulletL);
                 //var bulletR = new Bullet(newBullet, managers.Assets.atlas.getFrame(6).rect, this.ship.imageShip.x, this.ship.imageShip.y, this.ship.getShipRotation());
                 //this.bullets.push(bulletR);
-                // create a sound for the bullets
-                createjs.Sound.play("laser");
+                
                 // add the bullets to the game container
 
                 bulletContainer.addChild(bulletL);
