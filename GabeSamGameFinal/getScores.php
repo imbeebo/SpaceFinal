@@ -4,7 +4,7 @@ require_once('db.php');
 $conn=new PDO('mysql:host='.$host.';dbname='.$dbname,$user,$password);
 
 
-$sql = "SELECT name, score FROM scores ORDER BY score desc LIMIT 20;";
+$sql = "SELECT name, score FROM scoresMeme ORDER BY score desc LIMIT 20;";
 $result=$conn->query($sql);
 
 echo '<span>Top 20 Scoreboard</span><table>

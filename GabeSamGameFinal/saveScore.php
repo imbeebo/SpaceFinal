@@ -11,7 +11,7 @@ $conn=new PDO('mysql:host='.$host.';dbname='.$dbname,$user,$password);
 
 $conn -> setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 
-$paramStatement=$conn->prepare('INSERT INTO scores (name, score) VALUES(:name, :score);');
+$paramStatement=$conn->prepare('INSERT INTO scoresMeme (name, score) VALUES(:name, :score);');
 $paramStatement->execute(array(':name' => $name, ':score' => $score));
 $conn=null;}
 ?>
