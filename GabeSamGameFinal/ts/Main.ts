@@ -67,18 +67,10 @@ class Main {
     private enemiesSpawn: number = 1;
     private enemyHealth: number = 100;
     private levelIncrementChecker: number = 0;
-    
-
-
-
-
-
     // Main class constructor Set up the board.
     constructor(canvas: HTMLCanvasElement) {
         // set up the stage and add a message
         gameLevel = 1;
-
-
         this.canvas = canvas;
         this.game = new createjs.Container();
         bulletContainer = new createjs.Container();
@@ -96,50 +88,11 @@ class Main {
         // enable mouse and dom events
         this.stage.enableMouseOver();
         this.stage.enableDOMEvents(true);
-
-
-
-
         // load the assets
         managers.Assets.init();
         managers.Assets.loader.addEventListener("complete", (e: createjs.Event) => { this.onComplete(e) });
         managers.Assets.loader.addEventListener('progress', (e: createjs.Event) => { this.loading(e) });
     }
-    private setLevelVariables() {
-        if (gameLevel == 1) {
-            this.message.text = "Welcome to Level 1...";
-            this.game.addChild(this.message);
-            this.levelMessageInterval = setInterval(() => { this.hideMessage() }, 4000);
-            this.background.setBackgroundSpeed(100);
-            this.enemiesSpawn = 1;
-            this.enemyHealth = 100;
-            this.levelIncrementChecker++;
-        }
-        else if (gameLevel == 2) {
-            this.message.text = "Welcome to Level 2. Two enemies spawn at a time...";
-            this.game.addChild(this.message);
-            this.levelMessageInterval = setInterval(() => { this.hideMessage() }, 4000);
-            this.background.setBackgroundSpeed(150);
-            scoreBoard.setLife(1.15);
-            this.enemiesSpawn = 2;
-            this.levelIncrementChecker++;
-        }
-        else if (gameLevel == 3) {
-            this.message.text = "Welcome to Level 3. The enemies have more health...";
-            this.game.addChild(this.message);
-            this.levelMessageInterval = setInterval(() => { this.hideMessage() }, 4000);
-            this.background.setBackgroundSpeed(250);
-            scoreBoard.setLife(1.20);
-            this.enemyHealth = 150;
-            this.levelIncrementChecker++;
-        }
-    }
-
-    private hideMessage() {
-        window.clearInterval(this.levelMessageInterval);
-        this.game.removeChild(this.message);
-    }
-
     // Show loading progress to the user
     private loading(e: createjs.Event) {
         this.message.text = 'Loading: ' + Math.round(e.progress * 100) + '%';
@@ -155,8 +108,9 @@ class Main {
         this.background = new Background(backgroundImg, this.canvas);
         this.bgContainer.addChild(this.background);
 
+
+        //this.background = new Background();       
         this.setLevelVariables();
-        //this.background = new Background();
 
 
         // set up the tick event, start the music and set the framerate
@@ -166,6 +120,14 @@ class Main {
         //add the background, update the stage and open the front menu
 
         this.showNameForm(e);
+    }
+    // show the name form
+    private showNameForm(e: createjs.Event) {
+        this.game.removeChild(this.message);
+        // get the form
+        currentMenu = new menus.ShowName(this.message, this.canvas, this, this.game);
+        this.game.addChild(currentMenu);
+        this.stage.addChild(this.game);
     }
     private frontMenu(e: createjs.Event) {
         createjs.Sound.stop();
@@ -178,6 +140,84 @@ class Main {
         this.game.addChild(currentMenu);
         this.stage.addChild(this.game);
 
+    }
+    // Start the game.
+    public startGame(e: createjs.Event) {
+        this.levelIncrementChecker = 0;
+        gameLevel = 1;
+        this.setLevelVariables();
+        createjs.Sound.stop();
+        createjs.Sound.play("music", { loop: -1, volume: 0.4 });
+        // hide the cursor
+        //this.stage.cursor = "none";
+        // remove all children from the game container.
+        this.game.removeAllChildren();
+        // set the game state to true and the game over screen to false
+        this.game.addChild(bulletContainer, this.asteroidContainer);
+
+        this.gameOverScreen = false;
+        // set the score to 0 and the interval to 5 seconds
+        gameScore = 0;
+        this.eInterval = 4000;
+        // clear the arrays
+        bullets = [];
+        this.asteroidArray = [];
+        explosions = [];
+        asteroidExplosions = [];
+        // crea the bullet image        
+        this.bulletImg = managers.Assets.atlas.getFrame(0).image;
+        // set up the scoreboard
+        scoreBoard = new managers.scoreboard(this.game);
+        // create the ship object and setup the collision manager.
+        this.ship = new objects.Ship(this.stage, this.game);
+        this.game.addChild(this.ship);
+        // set up the initial enemy spawner and powerup interval
+        this.enemies = setInterval(() => { this.createEnemy() }, 150);
+        this.powerupInterval = setInterval(() => { this.createPowerup() }, 10000);
+        // add a debounce timer for the shooter and add event listeners to the stage.        
+        this.debounce = createjs.Ticker.getTime();
+
+        this.stage.addEventListener("click", (e: createjs.MouseEvent) => { this.shipFireClick(e) });
+        this.stage.addEventListener("stagemousemove", (e: createjs.MouseEvent) => { this.stageMouseMove(e) });
+
+        gameOn = true;
+    }
+    private setLevelVariables() {
+        if (gameLevel == 1) {
+            this.message.text = "Welcome to Level 1...";
+            this.message.alpha = .8;
+            this.game.addChild(this.message);
+            this.levelMessageInterval = setInterval(() => { this.hideMessage() }, 4000);
+            this.background.setBackgroundSpeed(100);
+            this.enemiesSpawn = 1;
+            this.enemyHealth = 100;
+            this.levelIncrementChecker++;
+        }
+        else if (gameLevel == 2) {
+            this.message.text = "Welcome to Level 2. Two enemies spawn at a time...";
+            this.message.alpha = .8;
+            this.game.addChild(this.message);
+            this.levelMessageInterval = setInterval(() => { this.hideMessage() }, 4000);
+            this.background.setBackgroundSpeed(150);
+            scoreBoard.setLife(1.15);
+            this.enemiesSpawn = 2;
+            this.levelIncrementChecker++;
+        }
+        else if (gameLevel == 3) {
+            this.message.text = "Welcome to Level 3. The enemies have more health...";
+            this.message.alpha = .8;
+            this.game.addChild(this.message);
+            this.levelMessageInterval = setInterval(() => { this.hideMessage() }, 4000);
+            this.background.setBackgroundSpeed(250);
+            scoreBoard.setLife(1.20);
+            this.enemyHealth = 150;
+            this.levelIncrementChecker++;
+        }
+    }
+    private hideMessage() {
+        window.clearInterval(this.levelMessageInterval);
+        this.game.removeChild(this.message);
+        this.message.alpha = 1;
     }
     // create an enemy item
     private createEnemy() {
@@ -231,44 +271,6 @@ class Main {
             }
         }
     }
-    // Start the game.
-    public startGame(e: createjs.Event) {
-        createjs.Sound.stop();
-        createjs.Sound.play("music", { loop: -1, volume: 0.4 });
-        // hide the cursor
-        //this.stage.cursor = "none";
-        // remove all children from the game container.
-        this.game.removeAllChildren();
-        // set the game state to true and the game over screen to false
-        this.game.addChild(bulletContainer, this.asteroidContainer);
-
-        this.gameOverScreen = false;
-        // set the score to 0 and the interval to 5 seconds
-        gameScore = 0;
-        this.eInterval = 4000;
-        // clear the arrays
-        bullets = [];
-        this.asteroidArray = [];
-        explosions = [];
-        asteroidExplosions = [];
-        // crea the bullet image        
-        this.bulletImg = managers.Assets.atlas.getFrame(0).image;
-        // set up the scoreboard
-        scoreBoard = new managers.scoreboard(this.game);
-        // create the ship object and setup the collision manager.
-        this.ship = new objects.Ship(this.stage, this.game);
-        this.game.addChild(this.ship);
-        // set up the initial enemy spawner and powerup interval
-        this.enemies = setInterval(() => { this.createEnemy() }, 150);
-        this.powerupInterval = setInterval(() => { this.createPowerup() }, 10000);
-        // add a debounce timer for the shooter and add event listeners to the stage.        
-        this.debounce = createjs.Ticker.getTime();
-
-        this.stage.addEventListener("click", (e: createjs.MouseEvent) => { this.shipFireClick(e) });
-        this.stage.addEventListener("stagemousemove", (e: createjs.MouseEvent) => { this.stageMouseMove(e) });
-
-        gameOn = true;
-    }
     // move the asteroids.
     private moveAsteroids(ds: number) {
         // loop through each asteroid 
@@ -314,23 +316,6 @@ class Main {
             }
         }
         this.asteroidContainer.updateCache();
-    }
-    private outOfLives() {
-        // destroy ship.
-        this.game.removeChild(this.ship);
-        // start ship explosion
-        shipExplode = new createjs.Sprite(managers.Assets.atlas, "asteroid_explosion");
-        shipExplode.x = this.ship.x - (this.ship.getBounds().width * 1.5);
-        shipExplode.y = this.ship.y - (this.ship.getBounds().height * 1.5);
-        shipExplode.play();
-        // play explosion sound
-        createjs.Sound.play("asteroidExplosion");
-        // add explosion to the game container
-        asteroidExplosions.push(shipExplode);
-        this.asteroidContainer.addChild(shipExplode);
-        // set the game to false
-        gameOn = false;
-        this.gameOver();
     }
     // move the bullets! PEW-PEW!
     private moveBullets(ds: number) {
@@ -407,6 +392,23 @@ class Main {
         }
         bulletContainer.updateCache();
     }
+    private outOfLives() {
+        // destroy ship.
+        this.game.removeChild(this.ship);
+        // start ship explosion
+        shipExplode = new createjs.Sprite(managers.Assets.atlas, "asteroid_explosion");
+        shipExplode.x = this.ship.x - (this.ship.getBounds().width * 1.5);
+        shipExplode.y = this.ship.y - (this.ship.getBounds().height * 1.5);
+        shipExplode.play();
+        // play explosion sound
+        createjs.Sound.play("asteroidExplosion");
+        // add explosion to the game container
+        asteroidExplosions.push(shipExplode);
+        this.asteroidContainer.addChild(shipExplode);
+        // set the game to false
+        gameOn = false;
+        this.gameOver();
+    }
     // this is the ticker class
     private tick(e: createjs.TickerEvent, e2: createjs.Event) {
         var ds = e.delta / 1000;
@@ -449,6 +451,9 @@ class Main {
     private gameOver() {
         createjs.Sound.stop();
         createjs.Sound.play("menuMusic", { loop: -1, volume: 0.4 });
+        this.levelIncrementChecker = 0;
+        gameLevel = 1;
+        this.setLevelVariables();
         // remove all children from the game container and all event listeners from the stage.
         this.destroyArray(asteroidExplosions);
         this.destroyArray(bullets);
@@ -515,14 +520,6 @@ class Main {
                 bulletContainer.addChild(bulletL);
             }
         }
-    }
-    // show the name form
-    private showNameForm(e: createjs.Event) {
-        this.game.removeChild(this.message);
-        // get the form
-        currentMenu = new menus.ShowName(this.message, this.canvas, this, this.game);
-        this.game.addChild(currentMenu);
-        this.stage.addChild(this.game);
     }
 
     // Remove element from the stage and from its array.
