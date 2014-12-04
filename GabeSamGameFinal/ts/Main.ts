@@ -38,6 +38,8 @@ var gameLevel: number;
 var playerCharacter;
 var enemyCharacter;
 
+var tickerInfo: createjs.Text;
+
 // main class 
 class Main {
     // private variables for the class
@@ -83,11 +85,21 @@ class Main {
         this.message.textAlign = 'center';
         this.message.x = canvas.width * .5;
         this.message.y = canvas.height * .5;
-        this.game.addChild(this.message);
+        tickerInfo = new createjs.Text('', 'bold 15px Comic Sans MS', '#ffffff');
+        this.game.addChild(this.message, tickerInfo);
         this.stage.addChild(this.bgContainer, this.game);
         // enable mouse and dom events
         this.stage.enableMouseOver();
         this.stage.enableDOMEvents(true);
+
+
+
+
+
+
+
+
+
         // load the assets
         managers.Assets.init();
         managers.Assets.loader.addEventListener("complete", (e: createjs.Event) => { this.onComplete(e) });
@@ -114,9 +126,11 @@ class Main {
 
 
         // set up the tick event, start the music and set the framerate
+
         createjs.Ticker.on('tick', (e2: createjs.TickerEvent) => { this.tick(e2, e) });
+        createjs.Ticker.setFPS(24);
+
         createjs.Sound.play("menuMusic", { loop: -1, volume: 0.4 });
-        createjs.Ticker.setFPS(120);
         //add the background, update the stage and open the front menu
 
         this.showNameForm(e);
@@ -126,7 +140,7 @@ class Main {
         this.game.removeChild(this.message);
         // get the form
         currentMenu = new menus.ShowName(this.message, this.canvas, this, this.game);
-        this.game.addChild(currentMenu);
+        this.game.addChild(currentMenu, tickerInfo);
         this.stage.addChild(this.game);
     }
     private frontMenu(e: createjs.Event) {
@@ -134,20 +148,13 @@ class Main {
         createjs.Sound.play("menuMusic", { loop: -1, volume: 0.4 });
         // add the buttons to the game container and add it to the stage.
 
-        this.game.removeChild(this.message);
+        this.game.removeChild(this.message, tickerInfo);
         // get the form
         currentMenu = new menus.FrontMenu(this.canvas, this, this.message, this.game);
         this.game.addChild(currentMenu);
         this.stage.addChild(this.game);
 
     }
-
-    private pauseMenu() {
-        currentMenu = new menus.Pause(this.canvas, this, this.message, this.game);
-        this.game.addChild(currentMenu);
-        this.stage.addChild(this.game);
-    }
-
     // Start the game.
     public startGame(e: createjs.Event) {
         this.levelIncrementChecker = 0;
@@ -160,12 +167,26 @@ class Main {
         // remove all children from the game container.
         this.game.removeAllChildren();
         // set the game state to true and the game over screen to false
-        this.game.addChild(bulletContainer, this.asteroidContainer);
+        this.game.addChild(bulletContainer, this.asteroidContainer, tickerInfo);
 
         this.gameOverScreen = false;
         // set the score to 0 and the interval to 5 seconds
         gameScore = 0;
         this.eInterval = 4000;
+
+
+
+
+
+
+        tickerInfo.x = 200;
+        tickerInfo.y = 60;
+
+        tickerInfo.text = 'FPS: ' + createjs.Ticker.getFPS().toString()
+        + ' Ticks: ' + createjs.Ticker.getTicks(true).toString()
+        + ' Time: ' + createjs.Ticker.getTime(true).toString();
+
+
         // clear the arrays
         bullets = [];
         this.asteroidArray = [];
@@ -187,6 +208,7 @@ class Main {
         this.stage.addEventListener("click", (e: createjs.MouseEvent) => { this.shipFireClick(e) });
         this.stage.addEventListener("stagemousemove", (e: createjs.MouseEvent) => { this.stageMouseMove(e) });
 
+
         //escape key brings up pause menu
         document.onkeypress = function (event) {
             console.log("KEYPRESS");
@@ -194,11 +216,23 @@ class Main {
             if (gameOn && event.keyCode == 80) {
                 this.pauseMenu();
                 console.log("Pausing");
+
             }
+
         }
+
+
+
 
         gameOn = true;
     }
+    private pauseMenu() {
+        currentMenu = new menus.Pause(this.canvas, this, this.message, this.game);
+        this.game.addChild(currentMenu);
+        this.stage.addChild(this.game);
+
+    }
+
     private setLevelVariables() {
         if (gameLevel == 1) {
             this.message.text = "Welcome to Level 1...";
@@ -362,6 +396,7 @@ class Main {
                         explosionSprite.x = bullet.x;
                         explosionSprite.y = bullet.y;
                         explosionSprite.name = 'explode';
+                        explosionSprite.framerate = 60;
                         explosionSprite.play();
                         explosions.push(explosionSprite);
                         // create an explosion sound for the bullet
@@ -384,6 +419,7 @@ class Main {
                     explosionSprite.x = bullet.x;
                     explosionSprite.y = bullet.y;
                     explosionSprite.name = 'explode';
+                    explosionSprite.framerate = 60;
                     explosionSprite.play();
                     explosions.push(explosionSprite);
                     // create an explosion sound for the bullet
@@ -416,6 +452,7 @@ class Main {
         shipExplode = new createjs.Sprite(managers.Assets.atlas, "asteroid_explosion");
         shipExplode.x = this.ship.x - (this.ship.getBounds().width * 1.5);
         shipExplode.y = this.ship.y - (this.ship.getBounds().height * 1.5);
+        shipExplode.framerate = 60;
         shipExplode.play();
         // play explosion sound
         createjs.Sound.play("asteroidExplosion");
@@ -429,7 +466,9 @@ class Main {
     // this is the ticker class
     private tick(e: createjs.TickerEvent, e2: createjs.Event) {
         var ds = e.delta / 1000;
-
+        tickerInfo.text = 'FPS: ' + createjs.Ticker.getFPS().toString()
+        + ' Ticks: ' + createjs.Ticker.getTicks(true).toString()
+        + ' Time: ' + createjs.Ticker.getTime(true).toString();
         if (scoreBoard != null) {
             if (scoreBoard.getEnemiesDestroyed() >= 150 && this.levelIncrementChecker == 2) {
                 gameLevel = 3;
@@ -531,7 +570,7 @@ class Main {
                 bullets.push(bulletL);
                 //var bulletR = new Bullet(newBullet, managers.Assets.atlas.getFrame(6).rect, this.ship.imageShip.x, this.ship.imageShip.y, this.ship.getShipRotation());
                 //this.bullets.push(bulletR);
-                
+
                 // add the bullets to the game container
 
                 bulletContainer.addChild(bulletL);
