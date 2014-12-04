@@ -49,13 +49,13 @@ module menus {
                 mainGame.startGame(null);
             });
 
-            this.selectDogeButton.on("mouseover", function () {
+            this.selectDogeButton.on("mouseover", (e: createjs.Event) => {
                 mouseOverText.text = "Doge";
                 mouseOverText.x = (canvas.width * .5) - (mouseOverText.getBounds().width * .5);
                 this.selectDogeButton.alpha = .8;
             });
 
-            this.selectDogeButton.on("mouseout", function () {
+            this.selectDogeButton.on("mouseout", (e: createjs.Event) => {
                 this.selectDogeButton.alpha = 1;
             });
 
@@ -65,13 +65,13 @@ module menus {
                 mainGame.startGame(null);
             });
 
-            this.selectErmahgerdButton.on("mouseover", function () {
+            this.selectErmahgerdButton.on("mouseover", (e: createjs.Event) => {
                 mouseOverText.text = "Ermahgerd";
                 mouseOverText.x = (canvas.width * .5) - (mouseOverText.getBounds().width * .5);
                 this.selectErmahgerdButton.alpha = .8;
             });
 
-            this.selectErmahgerdButton.on("mouseout", function () {
+            this.selectErmahgerdButton.on("mouseout", (e: createjs.Event) => {
                 this.selectErmahgerdButton.alpha = 1;
             });
 

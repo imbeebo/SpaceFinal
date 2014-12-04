@@ -116,7 +116,7 @@ class Main {
             this.levelIncrementChecker++;
         }
         else if (gameLevel == 2) {
-            this.message.text = "Welcome to Level 2...";
+            this.message.text = "Welcome to Level 2. Two enemies spawn at a time...";
             this.game.addChild(this.message);
             this.levelMessageInterval = setInterval(() => { this.hideMessage() }, 4000);
             this.background.setBackgroundSpeed(150);
@@ -125,7 +125,7 @@ class Main {
             this.levelIncrementChecker++;
         }
         else if (gameLevel == 3) {
-            this.message.text = "Welcome to Level 3...";
+            this.message.text = "Welcome to Level 3. The enemies have more health...";
             this.game.addChild(this.message);
             this.levelMessageInterval = setInterval(() => { this.hideMessage() }, 4000);
             this.background.setBackgroundSpeed(250);

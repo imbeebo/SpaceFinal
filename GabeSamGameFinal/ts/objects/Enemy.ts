@@ -41,12 +41,14 @@ module objects {
         }
 
         private enemyShoot() {
-            var bulletL = new Bullet(this.stage, this.name, false, null, this);
+
+            var angle = rand(-200, -160);
+            var bulletL = new Bullet(this.stage, this.name, false, angle, this);
             bullets.push(bulletL);
             bulletContainer.addChild(bulletL);
         }
         // set the forward velocity, angle velocity and rotation amount to a random value
-        private forwardVelocity = rand(300, 400);
+        private forwardVelocity = rand(200, 300);
         private angleVelocity = rand(-30, 30);
         private rotationAmount = rand(-3, 3);
         // move the enemy

@@ -18,7 +18,7 @@
 // bullet class
 class Bullet extends createjs.Text {
     // constructor for the bullet
-    shipRotation: number;          
+    bulletRotation: number;          
     character: string;
     playerShot: boolean;
     private dogeMemes = ["so destroy", "very violence", "much fight", "very wow",
@@ -28,7 +28,7 @@ class Bullet extends createjs.Text {
     private ermahgerdMemes = ["ERMAHGERD!", "GERSBERMPS!", "ERMAHGERDON!", "ERTS DURGE!",
         "MER BERLERTS!", "BURNG BURNG!", "GERT DURGE!"];
 
-    constructor(stage: createjs.Stage, character: string, playerShot: boolean, shipRotation?: number, shooter?: createjs.Sprite) {
+    constructor(stage: createjs.Stage, character: string, playerShot: boolean, bulletRotation?: number, shooter?: createjs.Sprite) {
         super("", "", "#d3d3d3")
         this.playerShot = playerShot;
         this.character = character;
@@ -53,12 +53,12 @@ class Bullet extends createjs.Text {
 
 
 
+        this.rotation = bulletRotation + 90;
+        this.bulletRotation = bulletRotation;
         if (this.playerShot) {
             // set where the bullet is.
-            this.shipRotation = shipRotation;
 
             this.x = stage.mouseX;
-            this.rotation = shipRotation + 90;
             this.y = stage.mouseY;
         }
         else {
@@ -74,10 +74,12 @@ class Bullet extends createjs.Text {
     // move the bullet
     public tick(ds: number) {   
         if (this.playerShot) {
-            this.x += 3.5 * Math.cos(-this.shipRotation / 180 * Math.PI);
+            this.x += 3.5 * Math.cos(-this.bulletRotation / 180 * Math.PI);
         }
         else {
-            this.x -= ds * 450;
+            //this.x -= ds * 450;
+            this.x += 4 * Math.cos(this.bulletRotation / 180 * Math.PI);
+            this.y += 4 * Math.sin(this.bulletRotation / 180 * Math.PI);
         }
     }
     public playerBullet() {
