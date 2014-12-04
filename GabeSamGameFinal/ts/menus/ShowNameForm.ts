@@ -2,7 +2,7 @@
 
     var nameInputForm: createjs.DOMElement;
     // Score Class
-    export class ShowName extends createjs.Container {
+    export class ShowName extends GameMenu {
         // private variables
 
 

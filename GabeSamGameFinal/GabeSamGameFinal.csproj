@@ -69,6 +69,7 @@
     <TypeScriptCompile Include="ts\objects\Button.ts" />
     <TypeScriptCompile Include="ts\objects\dogeSays.ts" />
     <TypeScriptCompile Include="ts\objects\Enemy.ts" />
+    <TypeScriptCompile Include="ts\objects\GameMenu.ts" />
     <TypeScriptCompile Include="ts\objects\Object.ts" />
     <TypeScriptCompile Include="ts\objects\Powerup.ts" />
     <TypeScriptCompile Include="ts\objects\Ship.ts" />

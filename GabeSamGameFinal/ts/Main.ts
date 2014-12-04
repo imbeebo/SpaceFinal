@@ -33,7 +33,7 @@ var gameScore: number = 0;
 var playerName = '';
 var bullets: Bullet[] = [];
 var bulletContainer: createjs.Container;
-var currentMenu: createjs.Container;
+var currentMenu: GameMenu;
 var gameLevel: number;
 var playerCharacter;
 var enemyCharacter;
@@ -424,6 +424,9 @@ class Main {
 
         // move the background image
         this.background.tick(ds);
+
+        if (currentMenu != null)
+            currentMenu.tick(ds);
         // if the game state is true...
         if (gameOn) {
             // this handles the score multiplier, reset it to 1 after 10 seconds

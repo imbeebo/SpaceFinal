@@ -1,6 +1,6 @@
 ﻿module menus {
     // Score Class
-    export class GameOver extends createjs.Container {
+    export class GameOver extends GameMenu {
         // private variables
 
 

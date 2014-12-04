@@ -1,6 +1,6 @@
 ﻿module menus {
     // Score Class
-    export class ShowInstructions extends createjs.Container {
+    export class ShowInstructions extends GameMenu {
         // private variables
 
 
