@@ -141,6 +141,13 @@ class Main {
         this.stage.addChild(this.game);
 
     }
+
+    private pauseMenu() {
+        currentMenu = new menus.Pause(this.canvas, this, this.message, this.game);
+        this.game.addChild(currentMenu);
+        this.stage.addChild(this.game);
+    }
+
     // Start the game.
     public startGame(e: createjs.Event) {
         this.levelIncrementChecker = 0;
@@ -179,6 +186,16 @@ class Main {
 
         this.stage.addEventListener("click", (e: createjs.MouseEvent) => { this.shipFireClick(e) });
         this.stage.addEventListener("stagemousemove", (e: createjs.MouseEvent) => { this.stageMouseMove(e) });
+
+        //escape key brings up pause menu
+        document.onkeypress = function (event) {
+            console.log("KEYPRESS");
+
+            if (gameOn && event.keyCode == 80) {
+                this.pauseMenu();
+                console.log("Pausing");
+            }
+        }
 
         gameOn = true;
     }

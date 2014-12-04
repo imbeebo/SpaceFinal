@@ -14,8 +14,9 @@ module menus {
         constructor(canvas: HTMLCanvasElement, mainGame: Main, message: createjs.Text, game: createjs.Container) {
             super();
 
-            currentMenu.removeAllChildren();
-            game.removeAllChildren();
+            console.log("Pause menu opened");
+
+            createjs.Ticker.setPaused(true);
 
             //generate required objects (text, buttons) required for this state
             var resumeButton = new objects.Button((canvas.width * .5) - 90, canvas.height * .5);
@@ -56,8 +57,6 @@ module menus {
 
             this.addChild(resumeButton, mainMenuButton, pauseMenuText);
             game.addChild(this);
-        }
-
         }
     }
 }

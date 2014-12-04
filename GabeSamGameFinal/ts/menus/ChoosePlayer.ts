@@ -80,7 +80,6 @@ module menus {
         }
 
         public tick(ds: number) {
-            console.log(Math.ceil(createjs.Ticker.getTicks() * 0.01));
             this.selectDogeButton.y = Math.sin(createjs.Ticker.getTicks() * 0.07) + this.canvas.height * 0.5;
             this.selectErmahgerdButton.y = Math.cos(createjs.Ticker.getTicks() * 0.07) + this.canvas.height * 0.5;
         }
