@@ -61,12 +61,13 @@ class Main {
     private debounce: number;
     private STAGE_WIDTH = 1500;
     private enemies: number;
-    private powerupInterval: number;
+    private powerupInterval: number = 10000;
     private eInterval: number = 4000;
     private MULTI_AMOUNT: number = 10000;
     private multiTimer: number;
     private levelMessageInterval: number;
-    private enemyOldTime: number = -4000;
+    private enemyOldTime: number = -5000;
+    private powerupOldTime: number = -10000;
 
     private enemiesSpawn: number = 1;
     private enemyHealth: number = 100;
@@ -200,11 +201,7 @@ class Main {
         scoreBoard = new managers.scoreboard(this.game);
         // create the ship object and setup the collision manager.
         this.ship = new objects.Ship(this.stage, this.game);
-        this.game.addChild(this.ship);
-        // set up the initial enemy spawner and powerup interval
-        //this.enemies = setInterval(() => { this.createEnemy() }, 150);
-        this.powerupInterval = setInterval(() => { this.createPowerup() }, 10000);
-        // add a debounce timer for the shooter and add event listeners to the stage.        
+        this.game.addChild(this.ship);     
         this.debounce = createjs.Ticker.getTime();
 
         this.stage.addEventListener("click", (e: createjs.MouseEvent) => { this.shipFireClick(e) });
@@ -217,6 +214,7 @@ class Main {
 
             if (gameOn && event.keyCode == 80) {
                 this.pauseMenu();
+                createjs.Ticker.setPaused(true);
                 console.log("Pausing");
 
             }
@@ -282,13 +280,6 @@ class Main {
             // push the variable into an array 
             this.asteroidArray.push(newAsteroid);
         }
-        // update the stage.
-        // clear the interval and re-add it then reduce the interval time by 100 milliseconds to a minimum of 700
-        //window.clearInterval(this.enemies);
-        //this.enemies = setInterval(() => { this.createEnemy() }, this.eInterval);
-        //if (this.eInterval > 1000) {
-        //    this.eInterval -= 100;
-        //}
     }
     // create an enemy item
     private createPowerup() {
@@ -495,26 +486,35 @@ class Main {
             currentMenu.tick(ds);
         // if the game state is true...
         if (gameOn) {
-            if (createjs.Ticker.getTime(true) >= this.enemyOldTime + this.eInterval) {
-                this.createEnemy();
-                if (this.eInterval > 1000) {
-                    this.eInterval -= 100;
+            if (!createjs.Ticker.getPaused()) {
+                if (createjs.Ticker.getTime(true) >= this.enemyOldTime + this.eInterval) {
+                    this.createEnemy();
+                    if (this.eInterval > 1000) {
+                        this.eInterval -= 100;
+                    }
+                    this.enemyOldTime = createjs.Ticker.getTime();
                 }
-                this.enemyOldTime = createjs.Ticker.getTime();
-            }
 
 
-            // this handles the score multiplier, reset it to 1 after 10 seconds
-            if (this.multiTimer <= createjs.Ticker.getTime() && scoreBoard.getMulti() == 2) {
-                scoreBoard.resetMulti();
-            }
-            this.movePowerUps(ds);
 
-            // move the asteroids!
-            this.moveAsteroids(ds);
-            // move the bullets!
-            if (gameOn) {
-                this.moveBullets(ds);
+                if (createjs.Ticker.getTime(true) >= this.powerupOldTime + this.powerupInterval) {
+                    this.createPowerup();
+                    this.powerupOldTime = createjs.Ticker.getTime();
+                }
+
+
+                // this handles the score multiplier, reset it to 1 after 10 seconds
+                if (this.multiTimer <= createjs.Ticker.getTime() && scoreBoard.getMulti() == 2) {
+                    scoreBoard.resetMulti();
+                }
+                this.movePowerUps(ds);
+
+                // move the asteroids!
+                this.moveAsteroids(ds);
+                // move the bullets!
+                if (gameOn) {
+                    this.moveBullets(ds);
+                }
             }
         }
         // update the stage

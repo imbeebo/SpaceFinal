@@ -23,6 +23,7 @@ module objects {
         health: number = 100;
         enemyC: createjs.Container;
         shootInterval: number;
+        shootOldTime: number = -1500;
         // constructor for the enemy
         constructor(x: number, y: number, name: string, stage: createjs.Stage, enemyC: createjs.Container, health: number) {
             super(x, y, name, stage);
@@ -33,9 +34,9 @@ module objects {
             this.gotoAndStop(enemyCharacter);
             this.regX = this.getBounds().width *.5;
             this.regY = this.getBounds().height * .5;
-            var randomShootInterval = rand(300, 2500);
+            this.shootInterval = rand(300, 2500);
             
-            this.shootInterval = setInterval(() => { this.enemyShoot() }, randomShootInterval);
+            
             // call the reset function
             this.reset(x);
         }
@@ -53,6 +54,13 @@ module objects {
         private rotationAmount = rand(-3, 3);
         // move the enemy
         tick(ds: number) {
+            if (createjs.Ticker.getTime(true) >= this.shootOldTime + this.shootInterval) {
+                this.enemyShoot();
+                this.shootOldTime = createjs.Ticker.getTime(true);
+            }
+            //if (createjs.Ticker.getTime(true) >= this.shootOldTime + this.shootInterval) {
+            //    this.enemyShoot();
+            //}
             // rotate the enemy
             this.rotation += this.rotationAmount;
             // move the enemy forward
