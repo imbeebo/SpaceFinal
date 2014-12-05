@@ -30,7 +30,8 @@ module menus {
             pauseMenuText.y = 50;
 
             resumeButton.on("click", (e: createjs.Event) => {
-                
+                game.removeChild(this);
+                createjs.Ticker.setPaused(false);
             });
 
             resumeButton.on("mouseover", (e: createjs.Event) => {
@@ -42,9 +43,7 @@ module menus {
             });
 
             mainMenuButton.on("click", (e: createjs.Event) => {
-                playerCharacter = 'ermahgerd';
-                enemyCharacter = 'doge';
-                mainGame.startGame(null);
+
             });
 
             mainMenuButton.on("mouseover", (e: createjs.Event) => {
