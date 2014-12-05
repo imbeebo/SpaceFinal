@@ -78,8 +78,8 @@ class Bullet extends createjs.Text {
         }
         else {
             //this.x -= ds * 450;
-            this.x += 12 * Math.cos(this.bulletRotation / 180 * Math.PI);
-            this.y += 12 * Math.sin(this.bulletRotation / 180 * Math.PI);
+            this.x += 13.5 * Math.cos(this.bulletRotation / 180 * Math.PI);
+            this.y += 13.5 * Math.sin(this.bulletRotation / 180 * Math.PI);
         }
     }
     public playerBullet() {

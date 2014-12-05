@@ -73,6 +73,8 @@ module objects {
             enemyExplode.name = 'explode';
             enemyExplode.framerate = 60;
             enemyExplode.play();
+           
+
             // play an explosion sound
             createjs.Sound.play("asteroidExplosion");
             asteroidExplosions.push(enemyExplode);

@@ -40,6 +40,7 @@ var enemyCharacter;
 
 var tickerInfo: createjs.Text;
 
+
 // main class 
 class Main {
     // private variables for the class
@@ -65,6 +66,7 @@ class Main {
     private MULTI_AMOUNT: number = 10000;
     private multiTimer: number;
     private levelMessageInterval: number;
+    private enemyOldTime: number = -4000;
 
     private enemiesSpawn: number = 1;
     private enemyHealth: number = 100;
@@ -200,7 +202,7 @@ class Main {
         this.ship = new objects.Ship(this.stage, this.game);
         this.game.addChild(this.ship);
         // set up the initial enemy spawner and powerup interval
-        this.enemies = setInterval(() => { this.createEnemy() }, 150);
+        //this.enemies = setInterval(() => { this.createEnemy() }, 150);
         this.powerupInterval = setInterval(() => { this.createPowerup() }, 10000);
         // add a debounce timer for the shooter and add event listeners to the stage.        
         this.debounce = createjs.Ticker.getTime();
@@ -282,11 +284,11 @@ class Main {
         }
         // update the stage.
         // clear the interval and re-add it then reduce the interval time by 100 milliseconds to a minimum of 700
-        window.clearInterval(this.enemies);
-        this.enemies = setInterval(() => { this.createEnemy() }, this.eInterval);
-        if (this.eInterval > 1000) {
-            this.eInterval -= 100;
-        }
+        //window.clearInterval(this.enemies);
+        //this.enemies = setInterval(() => { this.createEnemy() }, this.eInterval);
+        //if (this.eInterval > 1000) {
+        //    this.eInterval -= 100;
+        //}
     }
     // create an enemy item
     private createPowerup() {
@@ -469,6 +471,12 @@ class Main {
         tickerInfo.text = 'FPS: ' + createjs.Ticker.getFPS().toString()
         + ' Ticks: ' + createjs.Ticker.getTicks(true).toString()
         + ' Time: ' + createjs.Ticker.getTime(true).toString();
+
+
+        
+
+
+
         if (scoreBoard != null) {
             if (scoreBoard.getEnemiesDestroyed() >= 150 && this.levelIncrementChecker == 2) {
                 gameLevel = 3;
@@ -487,6 +495,15 @@ class Main {
             currentMenu.tick(ds);
         // if the game state is true...
         if (gameOn) {
+            if (createjs.Ticker.getTime(true) >= this.enemyOldTime + this.eInterval) {
+                this.createEnemy();
+                if (this.eInterval > 1000) {
+                    this.eInterval -= 100;
+                }
+                this.enemyOldTime = createjs.Ticker.getTime();
+            }
+
+
             // this handles the score multiplier, reset it to 1 after 10 seconds
             if (this.multiTimer <= createjs.Ticker.getTime() && scoreBoard.getMulti() == 2) {
                 scoreBoard.resetMulti();
