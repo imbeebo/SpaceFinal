@@ -37,6 +37,7 @@ var currentMenu: GameMenu;
 var gameLevel: number;
 var playerCharacter;
 var enemyCharacter;
+var gameInstance: Main;
 
 var tickerInfo: createjs.Text;
 
@@ -107,6 +108,7 @@ class Main {
         managers.Assets.init();
         managers.Assets.loader.addEventListener("complete", (e: createjs.Event) => { this.onComplete(e) });
         managers.Assets.loader.addEventListener('progress', (e: createjs.Event) => { this.loading(e) });
+        gameInstance = this;
     }
     // Show loading progress to the user
     private loading(e: createjs.Event) {
@@ -201,7 +203,7 @@ class Main {
         scoreBoard = new managers.scoreboard(this.game);
         // create the ship object and setup the collision manager.
         this.ship = new objects.Ship(this.stage, this.game);
-        this.game.addChild(this.ship);     
+        this.game.addChild(this.ship);
         this.debounce = createjs.Ticker.getTime();
 
         this.stage.addEventListener("click", (e: createjs.MouseEvent) => { this.shipFireClick(e) });
@@ -209,23 +211,16 @@ class Main {
 
 
         //escape key brings up pause menu
-        document.onkeypress = function (event) {
-            console.log("KEYPRESS");
+        
 
-            if (gameOn && event.keyCode == 80) {
-                this.pauseMenu();
-                createjs.Ticker.setPaused(true);
-                console.log("Pausing");
-
-            }
-
-        }
 
 
 
 
         gameOn = true;
     }
+
+
     private pauseMenu() {
         currentMenu = new menus.Pause(this.canvas, this, this.message, this.game);
         this.game.addChild(currentMenu);
@@ -463,8 +458,18 @@ class Main {
         + ' Ticks: ' + createjs.Ticker.getTicks(true).toString()
         + ' Time: ' + createjs.Ticker.getTime(true).toString();
 
+        document.onkeypress = function (event) {
+            console.log("KEYPRESS");
+                                         
+            if (gameOn && event.keyCode == 32) {
+                gameInstance.pauseMenu();
+                createjs.Ticker.setPaused(true);
+                console.log("Pausing");
 
-        
+            }
+
+        }
+
 
 
 
@@ -487,6 +492,7 @@ class Main {
         // if the game state is true...
         if (gameOn) {
             if (!createjs.Ticker.getPaused()) {
+
                 if (createjs.Ticker.getTime(true) >= this.enemyOldTime + this.eInterval) {
                     this.createEnemy();
                     if (this.eInterval > 1000) {
