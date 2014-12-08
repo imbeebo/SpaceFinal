@@ -9,8 +9,8 @@ where the player must shoot oncoming memes. Avoid being hit or shot by them.
 There are powerups to help you get through the levels
 
 Revision: 1.0
-Last Modified By: Gabriel Hounsome
-Date Last Modified: November 07, 2014
+Last Modified By: Samuel Halloran
+Date Last Modified: December 7, 2014
 
 Citations: Used JQuery, collsion detection module from indiegamer and royalty free art from: wrathgames.com
 Royalty Free Music: royalty free music from: http://www.looperman.com/media/loops/630386/looperman-l-0630386-0077610-mrfunktastic-trap-gods-bells-140f.mp3
@@ -75,16 +75,8 @@ module objects {
         destroy() {
             window.clearInterval(this.shootInterval);
             // set up an explosion animation for the enemy
-            var enemyExplode = new createjs.Sprite(managers.Assets.atlas, "asteroid_explosion");
-            enemyExplode.x = this.x - (this.getBounds().width * .5);
-            enemyExplode.y = this.y - (this.getBounds().height * .5);
-            enemyExplode.name = 'explode';
-            enemyExplode.framerate = 60;
-            enemyExplode.play();
-           
+            var enemyExplode = new Explosion("asteroid_explosion", "asteroidExplosion", this.x - (this.getBounds().width * .5), this.y - (this.getBounds().height * .5));
 
-            // play an explosion sound
-            createjs.Sound.play("asteroidExplosion");
             asteroidExplosions.push(enemyExplode);
             this.enemyC.addChild(enemyExplode);
             // set the health to 0 so it will be removed from the array on the next array check

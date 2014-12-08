@@ -14,8 +14,8 @@
     There are powerups to help you get through the levels
 
     Revision: 1.0
-    Last Modified By: Gabriel Hounsome
-    Date Last Modified: November 07, 2014
+    Last Modified By: Samuel Halloran
+    Date Last Modified: December 07, 2014
 
     Citations: Used JQuery, collsion detection module from indiegamer and royalty free art from: wrathgames.com
     Royalty Free Music: royalty free music from: http://www.looperman.com/media/loops/630386/looperman-l-0630386-0077610-mrfunktastic-trap-gods-bells-140f.mp3
@@ -25,7 +25,7 @@
 
 // globally accessible variables 
 var explosions: Explosion[] = [];
-var asteroidExplosions: createjs.Sprite[] = [];
+var asteroidExplosions: Explosion[] = [];
 var scoreBoard: managers.scoreboard;
 var shipExplode: createjs.Sprite;
 var gameOn = false;
@@ -347,9 +347,8 @@ class Main {
         // do the asteroid explosions, loop through the array for each explosion and check if it still has frames to display
         for (var i in asteroidExplosions) {
             var aExplosion = asteroidExplosions[i];
-            if (aExplosion.currentFrame == 110) {
+            if (aExplosion.getAnimationEnded()) {
                 // stop the animation and remove it from the game container and array
-                aExplosion.stop();
                 this.removeElement(aExplosion, asteroidExplosions, this.asteroidContainer);
 
             }
@@ -380,8 +379,9 @@ class Main {
                         this.asteroidArray[count].damage();
                         this.removeElement(bullet, bullets, bulletContainer);
                         // create an explosion for the bullet and put it into an explosion array
-                        var explosionSprite = new Explosion("bullet_explosion", bullet.x, bullet.y);
+                        var explosionSprite = new Explosion("bullet_explosion", "explosion", bullet.x, bullet.y);
                         bulletContainer.addChild(explosionSprite);
+                        explosions.push(explosionSprite);
                     }
                 }
             }
@@ -394,7 +394,8 @@ class Main {
                     }
                     this.removeElement(bullet, bullets, bulletContainer);
                     // create an explosion for the bullet and put it into an explosion array
-                    var explosionSprite = new Explosion("bullet_explosion", bullet.x, bullet.y);
+                    var explosionSprite = new Explosion("bullet_explosion", "explosion", bullet.x, bullet.y);
+                    bulletContainer.addChild(explosionSprite);
                     explosions.push(explosionSprite);
                 }
 
@@ -407,13 +408,12 @@ class Main {
         // do the bullet explosions, loop through the array for each explosion and check if it still has frames to display
         for (var i in explosions) {
             var explosion = explosions[i];
-            //console.log(explosion);
-            if (explosion.animationEnded) {
+            //console.log(explosion.getAnimationEnded() == true);
+            if (explosion.getAnimationEnded() == true) {
                 // stop the animation and remove it from the game container and array
-                explosion.stop();
-                alert("ANIM ENDED");
+                this.removeElement(explosion, explosions, bulletContainer)
             }
-            console.log(explosion.animationEnded);
+            
         }
 
         bulletContainer.updateCache();
@@ -422,7 +422,7 @@ class Main {
         // destroy ship.
         this.game.removeChild(this.ship);
         // start ship explosion
-        shipExplode = new Explosion("asteroid_explosion", this.ship.x, this.ship.y);
+        var shipExplode = new Explosion("asteroid_explosion", "asteroidExplosion", this.ship.x, this.ship.y);
         // add explosion to the game container
         asteroidExplosions.push(shipExplode);
         this.asteroidContainer.addChild(shipExplode);
