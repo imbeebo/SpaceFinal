@@ -566,7 +566,7 @@ class Main {
             if (this.debounce + 250 < newTime && gameOn) {
                 // create two bullets for the ship and put them into an array
                 var newBullet = managers.Assets.atlas.getFrame(6).image;
-                var bulletL = new Bullet(this.stage, playerCharacter, true, this.ship.rotation);
+                var bulletL = new Bullet(this.stage, playerCharacter, true, this.ship.rotation, this.ship);
                 //var bulletL = new Bullet(this.ship.rotation, this.stage, "doge");
 
                 bullets.push(bulletL);

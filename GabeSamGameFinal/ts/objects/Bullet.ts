@@ -58,8 +58,8 @@ class Bullet extends createjs.Text {
         if (this.playerShot) {
             // set where the bullet is.
 
-            this.x = stage.mouseX;
-            this.y = stage.mouseY;
+            this.x = shooter.x;
+            this.y = shooter.y;
         }
         else {
             this.x = shooter.x;
