@@ -24,7 +24,7 @@
 
 
 // globally accessible variables 
-var explosions: createjs.Sprite[] = [];
+var explosions: Explosion[] = [];
 var asteroidExplosions: createjs.Sprite[] = [];
 var scoreBoard: managers.scoreboard;
 var shipExplode: createjs.Sprite;
@@ -380,16 +380,7 @@ class Main {
                         this.asteroidArray[count].damage();
                         this.removeElement(bullet, bullets, bulletContainer);
                         // create an explosion for the bullet and put it into an explosion array
-                        var explosionSprite = new createjs.Sprite(managers.Assets.atlas, "bullet_explosion");
-                        explosionSprite.x = bullet.x;
-                        explosionSprite.y = bullet.y;
-                        explosionSprite.name = 'explode';
-                        explosionSprite.framerate = 60;
-                        explosionSprite.play();
-                        explosions.push(explosionSprite);
-                        // create an explosion sound for the bullet
-                        createjs.Sound.play("explosion");
-                        // add the explosion to the game container and update the stage.
+                        var explosionSprite = new Explosion("bullet_explosion", bullet.x, bullet.y);
                         bulletContainer.addChild(explosionSprite);
                     }
                 }
@@ -403,17 +394,8 @@ class Main {
                     }
                     this.removeElement(bullet, bullets, bulletContainer);
                     // create an explosion for the bullet and put it into an explosion array
-                    var explosionSprite = new createjs.Sprite(managers.Assets.atlas, "bullet_explosion");
-                    explosionSprite.x = bullet.x;
-                    explosionSprite.y = bullet.y;
-                    explosionSprite.name = 'explode';
-                    explosionSprite.framerate = 60;
-                    explosionSprite.play();
+                    var explosionSprite = new Explosion("bullet_explosion", bullet.x, bullet.y);
                     explosions.push(explosionSprite);
-                    // create an explosion sound for the bullet
-                    createjs.Sound.play("explosion");
-                    // add the explosion to the game container and update the stage.
-                    bulletContainer.addChild(explosionSprite);
                 }
 
             }
@@ -425,25 +407,22 @@ class Main {
         // do the bullet explosions, loop through the array for each explosion and check if it still has frames to display
         for (var i in explosions) {
             var explosion = explosions[i];
-            if (explosion.currentFrame == 18) {
+            //console.log(explosion);
+            if (explosion.animationEnded) {
                 // stop the animation and remove it from the game container and array
                 explosion.stop();
-                this.removeElement(explosion, explosions, bulletContainer);
+                alert("ANIM ENDED");
             }
+            console.log(explosion.animationEnded);
         }
+
         bulletContainer.updateCache();
     }
     private outOfLives() {
         // destroy ship.
         this.game.removeChild(this.ship);
         // start ship explosion
-        shipExplode = new createjs.Sprite(managers.Assets.atlas, "asteroid_explosion");
-        shipExplode.x = this.ship.x - (this.ship.getBounds().width * 1.5);
-        shipExplode.y = this.ship.y - (this.ship.getBounds().height * 1.5);
-        shipExplode.framerate = 60;
-        shipExplode.play();
-        // play explosion sound
-        createjs.Sound.play("asteroidExplosion");
+        shipExplode = new Explosion("asteroid_explosion", this.ship.x, this.ship.y);
         // add explosion to the game container
         asteroidExplosions.push(shipExplode);
         this.asteroidContainer.addChild(shipExplode);
