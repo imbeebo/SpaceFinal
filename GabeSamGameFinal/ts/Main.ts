@@ -440,7 +440,7 @@ class Main {
         document.onkeypress = function (event) {
             console.log("KEYPRESS");
                                          
-            if (gameOn && event.keyCode == 32) {
+            if (gameOn && event.keyCode == 32 && !createjs.Ticker.getPaused()) {
                 gameInstance.pauseMenu();
                 createjs.Ticker.setPaused(true);
                 console.log("Pausing");
@@ -561,7 +561,7 @@ class Main {
     // this is the only method anyone cares about; FIREPOWER!
     private shipFireClick(e: createjs.MouseEvent) {
         // check if the game is on
-        if (gameOn) {
+        if (gameOn && !createjs.Ticker.getPaused()) {
             // get the current game time
             var newTime = createjs.Ticker.getTime();
             // if the game time is greater than the debounce time plus 250ms, then continue

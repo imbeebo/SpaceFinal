@@ -62,6 +62,7 @@ module menus {
             mainMenuButton.on("click", (e: createjs.Event) => {
                 mainGame.endGame();
                 currentMenu = new menus.FrontMenu(canvas, mainGame, message, game);
+                createjs.Ticker.setPaused(false);
             });
 
             mainMenuButton.on("mouseover", (e: createjs.Event) => {
@@ -74,6 +75,7 @@ module menus {
             mainMenuButtonText.on("click", (e: createjs.Event) => {
                 mainGame.endGame();
                 currentMenu = new menus.FrontMenu(canvas, mainGame, message, game);
+                createjs.Ticker.setPaused(false);
             });
 
             mainMenuButtonText.on("mouseover", (e: createjs.Event) => {
