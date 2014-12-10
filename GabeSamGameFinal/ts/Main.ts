@@ -507,6 +507,16 @@ class Main {
     }
     // game over :(
     private gameOver() {
+        this.endGame();
+        currentMenu.removeAllChildren();
+        currentMenu = new menus.GameOver(this.message, this.canvas, this, this.game);
+
+        this.game.addChild(currentMenu);
+        this.stage.update();
+        // add the message and button to the container and add the container to the stage then update.
+
+    }
+    public endGame() {
         createjs.Sound.stop();
         createjs.Sound.play("menuMusic", { loop: -1, volume: 0.4 });
         this.levelIncrementChecker = 0;
@@ -540,14 +550,6 @@ class Main {
         send(playerName, gameScore);
         this.asteroidContainer.updateCache();
         bulletContainer.updateCache();
-
-        currentMenu.removeAllChildren();
-        currentMenu = new menus.GameOver(this.message, this.canvas, this, this.game);
-
-        this.game.addChild(currentMenu);
-        this.stage.update();
-        // add the message and button to the container and add the container to the stage then update.
-
     }
     // mouse move event
     private stageMouseMove(e: createjs.MouseEvent) {

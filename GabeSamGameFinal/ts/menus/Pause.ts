@@ -22,12 +22,17 @@ module menus {
             var resumeButton = new objects.Button((canvas.width * .5) - 90, canvas.height * .5);
             var mainMenuButton = new objects.Button((canvas.width * .5) + 90, canvas.height * .5);
            
-            var resumeButtonText = new createjs.Text('Resume Game', 'bold 15px Segoe UI', '#e66000');
+            var resumeButtonText = new createjs.Text('Resume', 'bold 15px Segoe UI', '#e66000');
             var mainMenuButtonText = new createjs.Text('Main Menu', 'bold 15px Segoe UI', '#e66000');
             var pauseMenuText = new createjs.Text('Game Paused', 'bold 25px Segoe UI', '#e66000');
 
             pauseMenuText.x = (canvas.width * .5) - (pauseMenuText.getBounds().width * .5);
             pauseMenuText.y = 50;
+
+            resumeButtonText.x = resumeButton.x - 40;
+            resumeButtonText.y = resumeButton.y - 10;
+            mainMenuButtonText.x = mainMenuButton.x - 40;
+            mainMenuButtonText.y = mainMenuButton.y - 10;
 
             resumeButton.on("click", (e: createjs.Event) => {
                 game.removeChild(this);
@@ -41,9 +46,22 @@ module menus {
             resumeButton.on("mouseout", (e: createjs.Event) => {
                 resumeButton.outBtn();
             });
+            resumeButtonText.on("click", (e: createjs.Event) => {
+                game.removeChild(this);
+                createjs.Ticker.setPaused(false);
+            });
+
+            resumeButtonText.on("mouseover", (e: createjs.Event) => {
+                resumeButton.overBtn();
+            });
+
+            resumeButtonText.on("mouseout", (e: createjs.Event) => {
+                resumeButton.outBtn();
+            });
 
             mainMenuButton.on("click", (e: createjs.Event) => {
-
+                mainGame.endGame();
+                currentMenu = new menus.FrontMenu(canvas, mainGame, message, game);
             });
 
             mainMenuButton.on("mouseover", (e: createjs.Event) => {
@@ -53,8 +71,20 @@ module menus {
             mainMenuButton.on("mouseout", (e: createjs.Event) => {
                 mainMenuButton.outBtn();
             });
+            mainMenuButtonText.on("click", (e: createjs.Event) => {
+                mainGame.endGame();
+                currentMenu = new menus.FrontMenu(canvas, mainGame, message, game);
+            });
 
-            this.addChild(resumeButton, mainMenuButton, pauseMenuText);
+            mainMenuButtonText.on("mouseover", (e: createjs.Event) => {
+                mainMenuButton.overBtn();
+            });
+
+            mainMenuButtonText.on("mouseout", (e: createjs.Event) => {
+                mainMenuButton.outBtn();
+            });
+
+            this.addChild(resumeButton, mainMenuButton, pauseMenuText, resumeButtonText, mainMenuButtonText);
             game.addChild(this);
         }
     }
