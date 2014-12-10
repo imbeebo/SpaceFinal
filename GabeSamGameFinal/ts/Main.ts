@@ -453,11 +453,11 @@ class Main {
 
 
         if (scoreBoard != null) {
-            if (scoreBoard.getEnemiesDestroyed() >= 150 && this.levelIncrementChecker == 2) {
+            if (scoreBoard.getEnemiesDestroyed() >= 75 && this.levelIncrementChecker == 2) {
                 gameLevel = 3;
                 this.setLevelVariables();
             }
-            else if (scoreBoard.getEnemiesDestroyed() >= 50 && this.levelIncrementChecker == 1) {
+            else if (scoreBoard.getEnemiesDestroyed() >= 25 && this.levelIncrementChecker == 1) {
                 gameLevel = 2;
                 this.setLevelVariables();
             }
