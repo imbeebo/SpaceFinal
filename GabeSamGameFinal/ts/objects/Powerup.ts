@@ -52,8 +52,8 @@ module objects {
             this.dy = Math.floor(Math.random() * 5 + 5);
             this.dx = Math.floor(Math.random() * -3) + Math.floor(Math.random() * 3);
             // set the y coordinate to a random value
-            var randomY = Math.floor(Math.random() * this.stage.canvas.height);
-            this.y = randomY;
+            //var randomY = Math.floor(Math.random() * this.stage.canvas.height);
+            this.y = rand(10, this.stage.canvas.height-10);
         }
         tick(ds: number) {
             // move the powerup forward
