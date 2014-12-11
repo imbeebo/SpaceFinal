@@ -74,12 +74,12 @@ class Bullet extends createjs.Text {
     // move the bullet
     public tick(ds: number) {   
         if (this.playerShot) {
-            this.x += 12 * Math.cos(-this.bulletRotation / 180 * Math.PI);
+            this.x += 5 * Math.cos(-this.bulletRotation / 180 * Math.PI);
         }
         else {
             //this.x -= ds * 450;
-            this.x += 13.5 * Math.cos(this.bulletRotation / 180 * Math.PI);
-            this.y += 13.5 * Math.sin(this.bulletRotation / 180 * Math.PI);
+            this.x += 6 * Math.cos(this.bulletRotation / 180 * Math.PI);
+            this.y += 6 * Math.sin(this.bulletRotation / 180 * Math.PI);
         }
     }
     public playerBullet() {

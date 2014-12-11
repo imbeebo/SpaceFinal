@@ -39,7 +39,6 @@ var playerCharacter;
 var enemyCharacter;
 var gameInstance: Main;
 
-var tickerInfo: createjs.Text;
 
 
 // main class 
@@ -89,8 +88,7 @@ class Main {
         this.message.textAlign = 'center';
         this.message.x = canvas.width * .5;
         this.message.y = canvas.height * .5;
-        tickerInfo = new createjs.Text('', 'bold 15px Comic Sans MS', '#ffffff');
-        this.game.addChild(this.message, tickerInfo);
+        this.game.addChild(this.message);
         this.stage.addChild(this.bgContainer, this.game);
         // enable mouse and dom events
         this.stage.enableMouseOver();
@@ -133,7 +131,7 @@ class Main {
         // set up the tick event, start the music and set the framerate
 
         createjs.Ticker.on('tick', (e2: createjs.TickerEvent) => { this.tick(e2, e) });
-        createjs.Ticker.setFPS(24);
+        createjs.Ticker.setFPS(60);
 
         createjs.Sound.play("menuMusic", { loop: -1, volume: 0.4 });
         //add the background, update the stage and open the front menu
@@ -145,7 +143,7 @@ class Main {
         this.game.removeChild(this.message);
         // get the form
         currentMenu = new menus.ShowName(this.message, this.canvas, this, this.game);
-        this.game.addChild(currentMenu, tickerInfo);
+        this.game.addChild(currentMenu);
         this.stage.addChild(this.game);
     }
     private frontMenu(e: createjs.Event) {
@@ -153,7 +151,7 @@ class Main {
         createjs.Sound.play("menuMusic", { loop: -1, volume: 0.4 });
         // add the buttons to the game container and add it to the stage.
 
-        this.game.removeChild(this.message, tickerInfo);
+        this.game.removeChild(this.message);
         // get the form
         currentMenu = new menus.FrontMenu(this.canvas, this, this.message, this.game);
         this.game.addChild(currentMenu);
@@ -172,7 +170,7 @@ class Main {
         // remove all children from the game container.
         this.game.removeAllChildren();
         // set the game state to true and the game over screen to false
-        this.game.addChild(bulletContainer, this.asteroidContainer, tickerInfo);
+        this.game.addChild(bulletContainer, this.asteroidContainer);
 
         this.gameOverScreen = false;
         // set the score to 0 and the interval to 5 seconds
@@ -184,12 +182,12 @@ class Main {
 
 
 
-        tickerInfo.x = 200;
-        tickerInfo.y = 60;
+        //tickerInfo.x = 200;
+        //tickerInfo.y = 60;
 
-        tickerInfo.text = 'FPS: ' + createjs.Ticker.getFPS().toString()
-        + ' Ticks: ' + createjs.Ticker.getTicks(true).toString()
-        + ' Time: ' + createjs.Ticker.getTime(true).toString();
+        //tickerInfo.text = 'FPS: ' + createjs.Ticker.getFPS().toString()
+        //+ ' Ticks: ' + createjs.Ticker.getTicks(true).toString()
+        //+ ' Time: ' + createjs.Ticker.getTime(true).toString();
 
 
         // clear the arrays
@@ -434,9 +432,9 @@ class Main {
     // this is the ticker class
     private tick(e: createjs.TickerEvent, e2: createjs.Event) {
         var ds = e.delta / 1000;
-        tickerInfo.text = 'FPS: ' + createjs.Ticker.getFPS().toString()
-        + ' Ticks: ' + createjs.Ticker.getTicks(true).toString()
-        + ' Time: ' + createjs.Ticker.getTime(true).toString();
+        //tickerInfo.text = 'FPS: ' + createjs.Ticker.getFPS().toString()
+        //+ ' Ticks: ' + createjs.Ticker.getTicks(true).toString()
+        //+ ' Time: ' + createjs.Ticker.getTime(true).toString();
 
         document.onkeypress = function (event) {
             console.log("KEYPRESS");
