@@ -1,10 +1,20 @@
-﻿module menus {
+﻿/*
+    File: ShowInstructions.ts
+    Author: Gabriel Hounsome & Sam Halloran
+    Website: Meme Wars
+    Description: This is a side-scroller shooter game 
+    where the player must shoot oncoming memes. Avoid being hit or shot by them. 
+    There are powerups to help you get through the levels
+    Date: December 11, 2014
+
+    Citations: Used JQuery, collsion detection module from indiegamer and royalty free art from: wrathgames.com
+    Royalty Free Music: royalty free music from: http://www.looperman.com/media/loops/630386/looperman-l-0630386-0077610-mrfunktastic-trap-gods-bells-140f.mp3
+*/
+module menus {
     // Score Class
     export class ShowInstructions extends GameMenu {
-        // private variables
 
-
-        // constructor for the scoreboard
+        // constructor for the instructions
         constructor(message: createjs.Text, canvas: HTMLCanvasElement, mainGame: Main, game: createjs.Container) {
             super();
             currentMenu.removeAllChildren();
@@ -28,10 +38,11 @@
             message.x = canvas.width * .5;
             message.y = 60;
             message.textAlign = 'center';
-            message.text = "Use the mouse to move the ship around the screen. "
+            message.text = "Choose between Ermahgerd or Doge. "
+            + "Use the mouse to move the ship around the screen."
             + "Left click to shoot the Asteroids before they hit you (Careful, it takes more than one "
             + "shot to kill them. If the mouse leaves the game area, you will lose control of the ship. "
-            + "Destroy as many asteroids as you can to boost your score. Pick up the powerups for perks.";
+            + "Destroy as many enemies as you can to boost your score. Pick up the powerups for perks.";
             this.addChild(backBtn, backBtnText, message);
             game.addChild(this);
         }

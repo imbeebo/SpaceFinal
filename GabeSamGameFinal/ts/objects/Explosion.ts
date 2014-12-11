@@ -1,18 +1,20 @@
 ﻿/*
     File: Explosion.ts
-    Author: Samuel Halloran
+    Author: Gabriel Hounsome & Sam Halloran
     Website: Meme Wars
-    Description: This class manages individual explosions and requred sounds and animations
+    Description: This is a side-scroller shooter game 
+    where the player must shoot oncoming memes. Avoid being hit or shot by them. 
+    There are powerups to help you get through the levels
+    Date: December 11, 2014
 
-    Revision: 1.0
-    Last Modified By: Samuel Halloran
-    Date Last Modified: December 07, 2014
+    Citations: Used JQuery, collsion detection module from indiegamer and royalty free art from: wrathgames.com
+    Royalty Free Music: royalty free music from: http://www.looperman.com/media/loops/630386/looperman-l-0630386-0077610-mrfunktastic-trap-gods-bells-140f.mp3
 */
 
-
+// explosion class
 class Explosion extends createjs.Sprite{
     private animationEnded: boolean = false;
-
+    // constructor for explosion
     constructor(spriteSheetReference:string, soundReference:string, x:number, y:number) {
         super(managers.Assets.atlas, spriteSheetReference);
 

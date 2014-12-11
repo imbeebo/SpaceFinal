@@ -1,12 +1,24 @@
-﻿module menus {
+﻿/*
+    File: ShowNameForm.ts
+    Author: Gabriel Hounsome & Sam Halloran
+    Website: Meme Wars
+    Description: This is a side-scroller shooter game 
+    where the player must shoot oncoming memes. Avoid being hit or shot by them. 
+    There are powerups to help you get through the levels
+    Date: December 11, 2014
+
+    Citations: Used JQuery, collsion detection module from indiegamer and royalty free art from: wrathgames.com
+    Royalty Free Music: royalty free music from: http://www.looperman.com/media/loops/630386/looperman-l-0630386-0077610-mrfunktastic-trap-gods-bells-140f.mp3
+*/
+module menus {
 
     var nameInputForm: createjs.DOMElement;
-    // Score Class
+    // show name form Class
     export class ShowName extends GameMenu {
         // private variables
 
 
-        // constructor for the scoreboard
+        // constructor for the show name form
         constructor(message: createjs.Text, canvas: HTMLCanvasElement, mainGame: Main, game: createjs.Container) {
             super();
 

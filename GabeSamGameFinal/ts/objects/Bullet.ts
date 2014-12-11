@@ -4,12 +4,8 @@
     Website: Meme Wars
     Description: This is a side-scroller shooter game 
     where the player must shoot oncoming memes. Avoid being hit or shot by them. 
-    There are powerups to help you get through the levels.
-
-
-    Revision: 1.0
-    Last Modified By: Gabriel Hounsome
-    Date Last Modified: November 07, 2014
+    There are powerups to help you get through the levels
+    Date: December 11, 2014
 
     Citations: Used JQuery, collsion detection module from indiegamer and royalty free art from: wrathgames.com
     Royalty Free Music: royalty free music from: http://www.looperman.com/media/loops/630386/looperman-l-0630386-0077610-mrfunktastic-trap-gods-bells-140f.mp3
@@ -17,7 +13,7 @@
 
 // bullet class
 class Bullet extends createjs.Text {
-    // constructor for the bullet
+    // variables
     bulletRotation: number;          
     character: string;
     playerShot: boolean;
@@ -27,7 +23,7 @@ class Bullet extends createjs.Text {
         "many premium", "such doge"];
     private ermahgerdMemes = ["ERMAHGERD!", "GERSBERMPS!", "ERMAHGERDON!", "ERTS DURGE!",
         "MER BERLERTS!", "BURNG BURNG!", "GERT DURGE!"];
-
+    // constructor for the bullet
     constructor(stage: createjs.Stage, character: string, playerShot: boolean, bulletRotation?: number, shooter?: createjs.Sprite) {
         super("", "", "#d3d3d3")
         this.playerShot = playerShot;
@@ -50,9 +46,6 @@ class Bullet extends createjs.Text {
             // create a sound for the bullets
             createjs.Sound.play("ermahgerdShoot");
         }
-
-
-
         this.rotation = bulletRotation + 90;
         this.bulletRotation = bulletRotation;
         if (this.playerShot) {
@@ -68,8 +61,6 @@ class Bullet extends createjs.Text {
             //this.rotation = 90;
         }
         this.name = 'bullet';
-
-        
     } 
     // move the bullet
     public tick(ds: number) {   
@@ -82,6 +73,7 @@ class Bullet extends createjs.Text {
             this.y += 6 * Math.sin(this.bulletRotation / 180 * Math.PI);
         }
     }
+    // return if it is a player bullet
     public playerBullet() {
         return this.playerShot;
     }

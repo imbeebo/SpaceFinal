@@ -12,16 +12,11 @@
     Description: This is a side-scroller shooter game 
     where the player must shoot oncoming memes. Avoid being hit or shot by them. 
     There are powerups to help you get through the levels
-
-    Revision: 1.0
-    Last Modified By: Samuel Halloran
-    Date Last Modified: December 07, 2014
+    Date: December 11, 2014
 
     Citations: Used JQuery, collsion detection module from indiegamer and royalty free art from: wrathgames.com
     Royalty Free Music: royalty free music from: http://www.looperman.com/media/loops/630386/looperman-l-0630386-0077610-mrfunktastic-trap-gods-bells-140f.mp3
 */
-
-
 
 // globally accessible variables 
 var explosions: Explosion[] = [];
@@ -93,15 +88,6 @@ class Main {
         // enable mouse and dom events
         this.stage.enableMouseOver();
         this.stage.enableDOMEvents(true);
-
-
-
-
-
-
-
-
-
         // load the assets
         managers.Assets.init();
         managers.Assets.loader.addEventListener("complete", (e: createjs.Event) => { this.onComplete(e) });
@@ -122,9 +108,6 @@ class Main {
         var backgroundImg = <HTMLImageElement> managers.Assets.loader.getResult('background')
         this.background = new Background(backgroundImg, this.canvas);
         this.bgContainer.addChild(this.background);
-
-
-        //this.background = new Background();       
         this.setLevelVariables();
 
 
@@ -146,6 +129,7 @@ class Main {
         this.game.addChild(currentMenu);
         this.stage.addChild(this.game);
     }
+    // show front menu
     private frontMenu(e: createjs.Event) {
         createjs.Sound.stop();
         createjs.Sound.play("menuMusic", { loop: -1, volume: 0.4 });
@@ -165,8 +149,6 @@ class Main {
         this.setLevelVariables();
         createjs.Sound.stop();
         createjs.Sound.play("music", { loop: -1, volume: 0.4 });
-        // hide the cursor
-        //this.stage.cursor = "none";
         // remove all children from the game container.
         this.game.removeAllChildren();
         // set the game state to true and the game over screen to false
@@ -176,19 +158,6 @@ class Main {
         // set the score to 0 and the interval to 5 seconds
         gameScore = 0;
         this.eInterval = 4000;
-
-
-
-
-
-
-        //tickerInfo.x = 200;
-        //tickerInfo.y = 60;
-
-        //tickerInfo.text = 'FPS: ' + createjs.Ticker.getFPS().toString()
-        //+ ' Ticks: ' + createjs.Ticker.getTicks(true).toString()
-        //+ ' Time: ' + createjs.Ticker.getTime(true).toString();
-
 
         // clear the arrays
         bullets = [];
@@ -206,18 +175,9 @@ class Main {
 
         this.stage.addEventListener("click", (e: createjs.MouseEvent) => { this.shipFireClick(e) });
         this.stage.addEventListener("stagemousemove", (e: createjs.MouseEvent) => { this.stageMouseMove(e) });
-
-
         //escape key brings up pause menu
-        
-
-
-
-
-
         gameOn = true;
     }
-
 
     private pauseMenu() {
         currentMenu = new menus.Pause(this.canvas, this, this.message, this.game);
@@ -258,6 +218,7 @@ class Main {
             this.levelIncrementChecker++;
         }
     }
+    // Hide the message
     private hideMessage() {
         window.clearInterval(this.levelMessageInterval);
         this.game.removeChild(this.message);
@@ -283,6 +244,7 @@ class Main {
         this.powersArray.push(newPU);
         // update the stage.
     }
+    // move the powerups down the stage
     private movePowerUps(ds: number) {
         // loop through the powerup array and move them closer to the edge of the screen.
         for (var i in this.powersArray) {
@@ -417,6 +379,7 @@ class Main {
 
         bulletContainer.updateCache();
     }
+    // handle when they are out of lives
     private outOfLives() {
         // destroy ship.
         this.game.removeChild(this.ship);
@@ -432,9 +395,6 @@ class Main {
     // this is the ticker class
     private tick(e: createjs.TickerEvent, e2: createjs.Event) {
         var ds = e.delta / 1000;
-        //tickerInfo.text = 'FPS: ' + createjs.Ticker.getFPS().toString()
-        //+ ' Ticks: ' + createjs.Ticker.getTicks(true).toString()
-        //+ ' Time: ' + createjs.Ticker.getTime(true).toString();
 
         document.onkeypress = function (event) {
             console.log("KEYPRESS");
@@ -443,13 +403,8 @@ class Main {
                 gameInstance.pauseMenu();
                 createjs.Ticker.setPaused(true);
                 console.log("Pausing");
-
             }
-
         }
-
-
-
 
         if (scoreBoard != null) {
             if (scoreBoard.getEnemiesDestroyed() >= 75 && this.levelIncrementChecker == 2) {
@@ -473,20 +428,15 @@ class Main {
 
                 if (createjs.Ticker.getTime(true) >= this.enemyOldTime + this.eInterval) {
                     this.createEnemy();
-                    if (this.eInterval > 1000) {
+                    if (this.eInterval > 1500) {
                         this.eInterval -= 100;
                     }
                     this.enemyOldTime = createjs.Ticker.getTime();
                 }
-
-
-
                 if (createjs.Ticker.getTime(true) >= this.powerupOldTime + this.powerupInterval) {
                     this.createPowerup();
                     this.powerupOldTime = createjs.Ticker.getTime();
                 }
-
-
                 // this handles the score multiplier, reset it to 1 after 10 seconds
                 if (this.multiTimer <= createjs.Ticker.getTime() && scoreBoard.getMulti() == 2) {
                     scoreBoard.resetMulti();
@@ -507,6 +457,8 @@ class Main {
     // game over :(
     private gameOver() {
 
+        gameLevel = 1;
+        this.setLevelVariables();
         this.endGame();
         currentMenu.removeAllChildren();
         currentMenu = new menus.GameOver(this.message, this.canvas, this, this.game);
@@ -516,14 +468,13 @@ class Main {
         // add the message and button to the container and add the container to the stage then update.
 
     }
+    // end the game
     public endGame() {
         gameOn = false;
 
         createjs.Sound.stop();
         createjs.Sound.play("menuMusic", { loop: -1, volume: 0.4 });
         this.levelIncrementChecker = 0;
-        gameLevel = 1;
-        this.setLevelVariables();
         // remove all children from the game container and all event listeners from the stage.
         this.destroyArray(asteroidExplosions);
         this.destroyArray(bullets);
@@ -573,11 +524,8 @@ class Main {
                 // create two bullets for the ship and put them into an array
                 var newBullet = managers.Assets.atlas.getFrame(6).image;
                 var bulletL = new Bullet(this.stage, playerCharacter, true, this.ship.rotation, this.ship);
-                //var bulletL = new Bullet(this.ship.rotation, this.stage, "doge");
 
                 bullets.push(bulletL);
-                //var bulletR = new Bullet(newBullet, managers.Assets.atlas.getFrame(6).rect, this.ship.imageShip.x, this.ship.imageShip.y, this.ship.getShipRotation());
-                //this.bullets.push(bulletR);
 
                 // add the bullets to the game container
 
@@ -592,6 +540,7 @@ class Main {
         var index = arr.indexOf(el);
         arr.splice(index, 1);
     }
+    // destroy array
     private destroyArray(arr: any[]) {
         for (var i in arr) {
             var el = arr[i];
