@@ -26,6 +26,9 @@ module objects {
             this.out = out;
 
             this.gotoAndStop(this.out);
+            // set the registration point and the coordinates
+            this.regX = this.getBounds().width * .5;
+            this.regY = this.getBounds().height * .5;
         }
         // cause button over effect
         overBtn() {

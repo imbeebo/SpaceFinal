@@ -17,9 +17,7 @@ module objects {
         // constructor for the object class
         constructor(x: number, y: number, name: string) {
             super(managers.Assets.atlas);
-            // set the registration point and the coordinates
-            this.regX = this.getBounds().width * .5;
-            this.regY = this.getBounds().height * .5;
+            
             this.x = x;
             this.y = y;
             this.name = name;

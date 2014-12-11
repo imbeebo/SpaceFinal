@@ -397,12 +397,10 @@ class Main {
         var ds = e.delta / 1000;
 
         document.onkeypress = function (event) {
-            console.log("KEYPRESS");
                                          
             if (gameOn && event.keyCode == 32 && !createjs.Ticker.getPaused()) {
                 gameInstance.pauseMenu();
                 createjs.Ticker.setPaused(true);
-                console.log("Pausing");
             }
         }
 
@@ -420,8 +418,8 @@ class Main {
         // move the background image
         this.background.tick(ds);
 
-        if (currentMenu != null)
-            currentMenu.tick(ds);
+        //if (currentMenu != null)
+        //    currentMenu.tick(ds);
         // if the game state is true...
         if (gameOn) {
             if (!createjs.Ticker.getPaused()) {
