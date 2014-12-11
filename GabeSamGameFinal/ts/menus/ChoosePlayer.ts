@@ -78,8 +78,8 @@ module menus {
         }
         // add move effect to buttons
         public tick(ds: number) {
-            this.selectDogeButton.y = Math.sin(createjs.Ticker.getTicks() * 0.1) * 1.5 + this.canvas.height * 0.5;
-            this.selectErmahgerdButton.y = Math.cos(createjs.Ticker.getTicks() * 0.1) * 1.5 + this.canvas.height * 0.5;
+            this.selectDogeButton.y = Math.sin(createjs.Ticker.getTicks() * 0.1) * 2 + this.canvas.height * 0.5;
+            this.selectErmahgerdButton.y = Math.cos(createjs.Ticker.getTicks() * 0.1) * 2 + this.canvas.height * 0.5;
         }
     }
 } 
