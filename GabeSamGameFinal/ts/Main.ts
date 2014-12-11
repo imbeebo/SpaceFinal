@@ -427,7 +427,7 @@ class Main {
         asteroidExplosions.push(shipExplode);
         this.asteroidContainer.addChild(shipExplode);
         // set the game to false
-        gameOn = false;
+        
         this.gameOver();
     }
     // this is the ticker class
@@ -507,6 +507,7 @@ class Main {
     }
     // game over :(
     private gameOver() {
+
         this.endGame();
         currentMenu.removeAllChildren();
         currentMenu = new menus.GameOver(this.message, this.canvas, this, this.game);
@@ -517,6 +518,8 @@ class Main {
 
     }
     public endGame() {
+        gameOn = false;
+
         createjs.Sound.stop();
         createjs.Sound.play("menuMusic", { loop: -1, volume: 0.4 });
         this.levelIncrementChecker = 0;
@@ -526,6 +529,7 @@ class Main {
         this.destroyArray(asteroidExplosions);
         this.destroyArray(bullets);
         this.destroyArray(explosions);
+        this.destroyArray(this.powersArray);
         for (var i in this.asteroidArray) {
             this.asteroidArray[i].stopEnemyShooting();
         }
@@ -535,6 +539,7 @@ class Main {
         bullets = [];
         explosions = [];
         this.asteroidArray = [];
+        this.powersArray = [];
         this.asteroidContainer.removeAllChildren();
         bulletContainer.removeAllChildren();
         this.game.removeAllChildren();
