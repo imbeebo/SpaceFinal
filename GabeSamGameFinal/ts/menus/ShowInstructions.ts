@@ -33,16 +33,16 @@ module menus {
             backBtnText.y = backBtn.y - 10;
             // create the instructions message
             message = new createjs.Text('', 'bold 30px Segoe UI', '#ffffff');
-            message.font = 'bold 15px Segoe UI';
+            message.font = 'bold 20px Segoe UI';
             message.lineWidth = canvas.width * .5;
             message.x = canvas.width * .5;
             message.y = 60;
             message.textAlign = 'center';
-            message.text = "Choose between Ermahgerd or Doge. "
-            + "Use the mouse to move the ship around the screen."
-            + "Left click to shoot the Asteroids before they hit you (Careful, it takes more than one "
-            + "shot to kill them. If the mouse leaves the game area, you will lose control of the ship. "
-            + "Destroy as many enemies as you can to boost your score. Pick up the powerups for perks.";
+            message.text = "Choose between Ermahgerd or Doge. \n\n"
+            + "Use the mouse to move the ship around the screen.\n"
+            + "Left click to shoot the enemy memes before they hit you (Careful, it takes more than one "
+            + "shot to kill them. \nIf the mouse leaves the game area, you will lose control of the ship. "
+            + "\n\nDestroy as many enemies as you can to boost your score and pick up the powerups for perks.";
             this.addChild(backBtn, backBtnText, message);
             game.addChild(this);
         }
