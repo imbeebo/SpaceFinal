@@ -35,6 +35,7 @@
     <Content Include="assets\sounds\Explosion.mp3" />
     <Content Include="assets\sounds\Laser.mp3" />
     <Content Include="assets\sounds\music.mp3" />
+    <Content Include="assets\sounds\powerupSound.mp3" />
     <Content Include="db.php" />
     <Content Include="index.html" />
     <Content Include="js\easeljs-0.7.1.min.js" />

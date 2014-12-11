@@ -23,6 +23,7 @@ module managers {
         { src: 'assets/sounds/bark.mp3', id: 'dogeBark' },
         { src: 'assets/sounds/ermahgerd.mp3', id: 'ermahgerdShoot' },
         { src: 'assets/sounds/Explosion.mp3', id: 'explosion' },
+        { src: 'assets/sounds/powerupSound.mp3', id: 'powerupSound' },
         { src: 'assets/sounds/asteroidExplode.mp3', id: 'asteroidExplosion' },
         { src: 'assets/data/sprites.json', id: 'spriteSheet' },
         { src: 'assets/images/spriteSheet.png', id: 'spriteImg' }

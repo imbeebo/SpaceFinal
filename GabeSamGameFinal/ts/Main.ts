@@ -292,6 +292,7 @@ class Main {
             var collision = ndgmr.checkPixelCollision(cPower, this.ship, 0);
             // check for a collision between powerup and ship
             if (collision) {
+                createjs.Sound.play("powerupSound");
                 if (cPower.name == '112') { scoreBoard.update(1000); }
                 else if (cPower.name == '113') { scoreBoard.changeMulti(2); this.multiTimer = createjs.Ticker.getTime() + this.MULTI_AMOUNT; }
                 else if (cPower.name == '114') {
