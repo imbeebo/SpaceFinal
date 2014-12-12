@@ -40,10 +40,47 @@ module menus {
             message.textAlign = 'center';
             message.text = "Choose between Ermahgerd or Doge. \n\n"
             + "Use the mouse to move the ship around the screen.\n"
+            + "Use the spacebar to pause the game.\n"
             + "Left click to shoot the enemy memes before they hit you (Careful, it takes more than one "
             + "shot to kill them. \nIf the mouse leaves the game area, you will lose control of the ship. "
             + "\n\nDestroy as many enemies as you can to boost your score and pick up the powerups for perks.";
-            this.addChild(backBtn, backBtnText, message);
+            var goldBar = new createjs.Sprite(managers.Assets.atlas);
+            goldBar.gotoAndStop(112);
+            goldBar.x = 200;
+            goldBar.y = 360;
+            var goldText = new createjs.Text('This gives you 1000 points', 'bold 17px Segoe UI', '#ffffff');
+            goldText.lineWidth = 100;
+            goldText.x = goldBar.x + 30;
+            goldText.y = goldBar.y + 75;
+            goldText.textAlign = 'center';
+            var multiBubble = new createjs.Sprite(managers.Assets.atlas);
+            multiBubble.gotoAndStop(113);
+            multiBubble.x = 340;
+            multiBubble.y = 360;
+            var multiText = new createjs.Text('This gives you a x2 score multiplier', 'bold 17px Segoe UI', '#ffffff');
+            multiText.lineWidth = 100;
+            multiText.x = multiBubble.x + 30;
+            multiText.y = multiBubble.y + 75;
+            multiText.textAlign = 'center';
+            var nukeBomb = new createjs.Sprite(managers.Assets.atlas);
+            nukeBomb.gotoAndStop(114);
+            nukeBomb.x = 480;
+            nukeBomb.y = 360;
+            var nukeText = new createjs.Text('This blows up all the enemy memes on the screen', 'bold 17px Segoe UI', '#ffffff');
+            nukeText.lineWidth = 100;
+            nukeText.x = nukeBomb.x + 30;
+            nukeText.y = nukeBomb.y + 75;
+            nukeText.textAlign = 'center';
+            var healthBubble = new createjs.Sprite(managers.Assets.atlas);
+            healthBubble.gotoAndStop(115);
+            healthBubble.x = 620;
+            healthBubble.y = 360;
+            var healthText = new createjs.Text('This gives you 10 health', 'bold 17px Segoe UI', '#ffffff');
+            healthText.lineWidth = 100;
+            healthText.x = healthBubble.x + 30;
+            healthText.y = healthBubble.y + 75;
+            healthText.textAlign = 'center';
+            this.addChild(backBtn, backBtnText, message, goldBar, goldText, multiBubble,multiText,nukeBomb,nukeText,healthBubble,healthText);
             game.addChild(this);
         }
     }
