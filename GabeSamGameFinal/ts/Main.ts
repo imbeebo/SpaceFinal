@@ -369,6 +369,12 @@ class Main {
             if (bullet.x > this.canvas.width || bullet.x < 0) {
                 this.removeElement(bullet, bullets, bulletContainer);
             }
+
+            if (bullet.creationTime + 500 < createjs.Ticker.getTicks(true)) {
+                this.removeElement(bullet, bullets, bulletContainer);
+            }
+
+            console.log(bullet.creationTime);
         }
         // do the bullet explosions, loop through the array for each explosion and check if it still has frames to display
         for (var i in explosions) {

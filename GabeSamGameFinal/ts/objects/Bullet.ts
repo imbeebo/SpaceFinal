@@ -14,6 +14,7 @@
 // bullet class
 class Bullet extends createjs.Text {
     // variables
+    creationTime: number = 0;
     bulletRotation: number;          
     character: string;
     playerShot: boolean;
@@ -25,7 +26,11 @@ class Bullet extends createjs.Text {
         "MER BERLERTS!", "BURNG BURNG!", "GERT DURGE!"];
     // constructor for the bullet
     constructor(stage: createjs.Stage, character: string, playerShot: boolean, bulletRotation?: number, shooter?: createjs.Sprite) {
+
+
         super("", "", "#d3d3d3")
+
+        this.creationTime = createjs.Ticker.getTicks(true);
         this.playerShot = playerShot;
         this.character = character;
         if (this.character == "doge" || this.character == "dogePlayer") {
