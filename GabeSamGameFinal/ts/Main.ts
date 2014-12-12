@@ -418,8 +418,8 @@ class Main {
         // move the background image
         this.background.tick(ds);
 
-        //if (currentMenu != null)
-        //    currentMenu.tick(ds);
+        if (currentMenu != null)
+            currentMenu.tick(ds);
         // if the game state is true...
         if (gameOn) {
             if (!createjs.Ticker.getPaused()) {
