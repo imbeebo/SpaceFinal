@@ -63,6 +63,7 @@ class Main {
     private levelMessageInterval: number;
     private enemyOldTime: number = -5000;
     private powerupOldTime: number = -10000;
+    private levelIntervalMinimum: number = 1500;
 
     private enemiesSpawn: number = 1;
     private enemyHealth: number = 100;
@@ -195,6 +196,7 @@ class Main {
             this.background.setBackgroundSpeed(100);
             this.enemiesSpawn = 1;
             this.enemyHealth = 100;
+            this.levelIntervalMinimum = 1500;
             this.levelIncrementChecker++;
         }
         else if (gameLevel == 2) {
@@ -205,6 +207,7 @@ class Main {
             this.background.setBackgroundSpeed(150);
             scoreBoard.setLife(1.15);
             this.enemiesSpawn = 2;
+            this.levelIntervalMinimum = 1000;
             this.levelIncrementChecker++;
         }
         else if (gameLevel == 3) {
@@ -215,6 +218,7 @@ class Main {
             this.background.setBackgroundSpeed(250);
             scoreBoard.setLife(1.20);
             this.enemyHealth = 150;
+            this.levelIntervalMinimum = 800;
             this.levelIncrementChecker++;
         }
     }
@@ -426,7 +430,7 @@ class Main {
 
                 if (createjs.Ticker.getTime(true) >= this.enemyOldTime + this.eInterval) {
                     this.createEnemy();
-                    if (this.eInterval > 1500) {
+                    if (this.eInterval > this.levelIntervalMinimum) {
                         this.eInterval -= 100;
                     }
                     this.enemyOldTime = createjs.Ticker.getTime();
