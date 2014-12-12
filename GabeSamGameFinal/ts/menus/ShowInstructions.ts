@@ -46,7 +46,7 @@ module menus {
             + "\n\nDestroy as many enemies as you can to boost your score and pick up the powerups for perks.";
             var goldBar = new createjs.Sprite(managers.Assets.atlas);
             goldBar.gotoAndStop(112);
-            goldBar.x = 200;
+            goldBar.x = 260;
             goldBar.y = 360;
             var goldText = new createjs.Text('This gives you 1000 points', 'bold 17px Segoe UI', '#ffffff');
             goldText.lineWidth = 100;
@@ -55,7 +55,7 @@ module menus {
             goldText.textAlign = 'center';
             var multiBubble = new createjs.Sprite(managers.Assets.atlas);
             multiBubble.gotoAndStop(113);
-            multiBubble.x = 340;
+            multiBubble.x = 400;
             multiBubble.y = 360;
             var multiText = new createjs.Text('This gives you a x2 score multiplier', 'bold 17px Segoe UI', '#ffffff');
             multiText.lineWidth = 100;
@@ -64,7 +64,7 @@ module menus {
             multiText.textAlign = 'center';
             var nukeBomb = new createjs.Sprite(managers.Assets.atlas);
             nukeBomb.gotoAndStop(114);
-            nukeBomb.x = 480;
+            nukeBomb.x = 540;
             nukeBomb.y = 360;
             var nukeText = new createjs.Text('This blows up all the enemy memes on the screen', 'bold 17px Segoe UI', '#ffffff');
             nukeText.lineWidth = 100;
@@ -73,7 +73,7 @@ module menus {
             nukeText.textAlign = 'center';
             var healthBubble = new createjs.Sprite(managers.Assets.atlas);
             healthBubble.gotoAndStop(115);
-            healthBubble.x = 620;
+            healthBubble.x = 680;
             healthBubble.y = 360;
             var healthText = new createjs.Text('This gives you 10 health', 'bold 17px Segoe UI', '#ffffff');
             healthText.lineWidth = 100;
