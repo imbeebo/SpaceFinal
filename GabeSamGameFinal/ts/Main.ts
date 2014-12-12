@@ -207,6 +207,7 @@ class Main {
             this.background.setBackgroundSpeed(150);
             scoreBoard.setLife(1.15);
             this.enemiesSpawn = 2;
+            this.eInterval = 3500;
             this.levelIntervalMinimum = 1000;
             this.levelIncrementChecker++;
         }
@@ -218,6 +219,7 @@ class Main {
             this.background.setBackgroundSpeed(250);
             scoreBoard.setLife(1.20);
             this.enemyHealth = 150;
+            this.eInterval = 2500;
             this.levelIntervalMinimum = 800;
             this.levelIncrementChecker++;
         }
