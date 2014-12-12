@@ -30,7 +30,7 @@ class Bullet extends createjs.Text {
 
         super("", "", "#d3d3d3")
 
-        this.creationTime = createjs.Ticker.getTicks(true);
+        this.creationTime = createjs.Ticker.getTime(true);
         this.playerShot = playerShot;
         this.character = character;
         if (this.character == "doge" || this.character == "dogePlayer") {
@@ -65,10 +65,12 @@ class Bullet extends createjs.Text {
             this.y = shootLoc;
             //this.rotation = 90;
         }
+        this.on('tick', (e2: createjs.TickerEvent) => { this.tick() });
+        
         this.name = 'bullet';
     } 
     // move the bullet
-    public tick(ds: number) {   
+    public tick() {   
         if (this.playerShot) {
             this.x += 5 * Math.cos(-this.bulletRotation / 180 * Math.PI);
         }
@@ -76,6 +78,10 @@ class Bullet extends createjs.Text {
             //this.x -= ds * 450;
             this.x += 6 * Math.cos(this.bulletRotation / 180 * Math.PI);
             this.y += 6 * Math.sin(this.bulletRotation / 180 * Math.PI);
+        }
+        if (this.creationTime + 6000 < createjs.Ticker.getTime(true)) {
+            bullets.splice(bullets.indexOf(this), 1);
+            bulletContainer.removeChild(this);
         }
     }
     // return if it is a player bullet

@@ -327,7 +327,7 @@ class Main {
         // loop through the bullets array and move them closer to the edge of the screen.
         for (var i in bullets) {
             var bullet = bullets[i];
-            bullet.tick(ds);
+            //bullet.tick();
             var newBullet = managers.Assets.atlas.getFrame(6).image;
             var bulletBox = new createjs.Bitmap(newBullet);
 
@@ -372,9 +372,7 @@ class Main {
                 this.removeElement(bullet, bullets, bulletContainer);
             }
 
-            if (bullet.creationTime + 500 < createjs.Ticker.getTicks(true)) {
-                this.removeElement(bullet, bullets, bulletContainer);
-            }
+            
 
             console.log(bullet.creationTime);
         }
