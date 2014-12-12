@@ -69,7 +69,12 @@ module menus {
             hsBtnText.y = highScores.y - 10;
             hsBtnText.name = 'highScore';
             hsBtnText.cursor = "pointer";
-            this.addChild(playButton, playBtnText, instructionButton, insBtnText, highScores, hsBtnText);
+
+            var bannerText = new createjs.Text('M E M E   W A R S', 'bold 60px Arial Narrow', '#e66000');
+            bannerText.x = (canvas.width * .5) - (bannerText.getBounds().width * .5);
+            bannerText.y = 150;
+
+            this.addChild(playButton, playBtnText, instructionButton, insBtnText, highScores, hsBtnText, bannerText);
             game.addChild(this);
         }
     }
