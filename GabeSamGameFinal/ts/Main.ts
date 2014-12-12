@@ -57,7 +57,7 @@ class Main {
     private STAGE_WIDTH = 1500;
     private enemies: number;
     private powerupInterval: number = 10000;
-    private eInterval: number = 6000;
+    private eInterval: number = 5000;
     private MULTI_AMOUNT: number = 10000;
     private multiTimer: number;
     private levelMessageInterval: number;
@@ -158,7 +158,7 @@ class Main {
         this.gameOverScreen = false;
         // set the score to 0 and the interval to 5 seconds
         gameScore = 0;
-        this.eInterval = 4000;
+        this.eInterval = 5000;
 
         // clear the arrays
         bullets = [];
