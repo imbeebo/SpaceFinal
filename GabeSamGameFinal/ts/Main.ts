@@ -464,6 +464,7 @@ class Main {
     }
     // game over :(
     private gameOver() {
+        this.levelIncrementChecker = 0;
 
         gameLevel = 1;
         this.setLevelVariables();
